@@ -41,6 +41,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
 .agent-panel{border-left:4px solid var(--burgundy)}
 .agent-notice{margin:0 0 10px}.agent-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}.agent-steps li{display:grid;grid-template-columns:25px 1fr;gap:9px;align-items:start}.agent-steps li>span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#e9dcc2;color:var(--burgundy);font-weight:800}.agent-steps small{display:block;color:var(--muted);margin-top:2px}.agent-lower{margin-top:16px}.agent-suggestion{font-size:12px;color:var(--ink);margin-top:5px}.agent-reasons{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.agent-empty{padding:22px;text-align:center;color:var(--muted)}#agentDraft{min-height:140px}
 @media(max-width:560px){.agent-steps{gap:10px}.agent-lower{gap:12px}}
+
+#agent .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:560px){#agent .stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -54,7 +57,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   <button data-tab="tasks"><span>☷</span> Task & Sub-task</button>
   <button data-tab="wbs"><span>▤</span> WBS per Proyek</button>
   <button data-tab="gantt"><span>▥</span> Gantt Chart</button>
-  <button data-tab="reports"><span>▤</span> Laporan</button>\n  <button data-tab="agent"><span>◉</span> Asisten Pengawas</button>
+  <button data-tab="reports"><span>▤</span> Laporan</button>
+  <button data-tab="agent"><span>◉</span> Asisten Pengawas</button>
   <button data-tab="settings"><span>⚙</span> Pengaturan</button>
  </nav>
  <div class="side-foot" id="cloudFoot">Design by Assifa Yuichiro</div>
@@ -82,7 +86,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
  <section id="agent" class="section">
  <div class="grid stats">
   <div class="card stat"><div><div class="label">PERLU TINDAKAN</div><div class="num" id="agentOpenCount">0</div><small>Task belum selesai</small></div><div class="icon">!</div></div>
-  <div class="card stat"><div><div class="label">UPDATE MANDek</div><div class="num" id="agentStaleCount">0</div><small>Belum ada update ≥2 hari</small></div><div class="icon">◷</div></div>
+  <div class="card stat"><div><div class="label">UPDATE MANDEK</div><div class="num" id="agentStaleCount">0</div><small>Belum ada update ≥2 hari</small></div><div class="icon">◷</div></div>
   <div class="card stat"><div><div class="label">TERBLOKIR</div><div class="num" id="agentBlockedCount">0</div><small>Predecessor belum selesai</small></div><div class="icon">↗</div></div>
  </div>
  <div class="card agent-panel">
