@@ -37,6 +37,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
 .overdue-details #lateList{padding:0 18px 10px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:650px){.meta{font-size:12px;gap:8px 12px}.action-toolbar{align-items:stretch}.action-toolbar select{max-width:none;flex:1 1 100%}.action-toolbar button{flex:0 0 auto}#riskOverview,#workOrderTAT{max-height:58vh}}
+
+.agent-panel{border-left:4px solid var(--burgundy)}
+.agent-notice{margin:0 0 10px}.agent-steps{list-style:none;margin:0;padding:0;display:grid;gap:12px}.agent-steps li{display:grid;grid-template-columns:25px 1fr;gap:9px;align-items:start}.agent-steps li>span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#e9dcc2;color:var(--burgundy);font-weight:800}.agent-steps small{display:block;color:var(--muted);margin-top:2px}.agent-lower{margin-top:16px}.agent-suggestion{font-size:12px;color:var(--ink);margin-top:5px}.agent-reasons{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0}.agent-empty{padding:22px;text-align:center;color:var(--muted)}#agentDraft{min-height:140px}
+@media(max-width:560px){.agent-steps{gap:10px}.agent-lower{gap:12px}}
 </style>
 </head>
 <body>
@@ -50,7 +54,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   <button data-tab="tasks"><span>☷</span> Task & Sub-task</button>
   <button data-tab="wbs"><span>▤</span> WBS per Proyek</button>
   <button data-tab="gantt"><span>▥</span> Gantt Chart</button>
-  <button data-tab="reports"><span>▤</span> Laporan</button>
+  <button data-tab="reports"><span>▤</span> Laporan</button>\n  <button data-tab="agent"><span>◉</span> Asisten Pengawas</button>
   <button data-tab="settings"><span>⚙</span> Pengaturan</button>
  </nav>
  <div class="side-foot" id="cloudFoot">Design by Assifa Yuichiro</div>
@@ -75,7 +79,38 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   </div>
  </section>
 
- <section id="projects" class="section">
+ <section id="agent" class="section">
+ <div class="grid stats">
+  <div class="card stat"><div><div class="label">PERLU TINDAKAN</div><div class="num" id="agentOpenCount">0</div><small>Task belum selesai</small></div><div class="icon">!</div></div>
+  <div class="card stat"><div><div class="label">UPDATE MANDek</div><div class="num" id="agentStaleCount">0</div><small>Belum ada update ≥2 hari</small></div><div class="icon">◷</div></div>
+  <div class="card stat"><div><div class="label">TERBLOKIR</div><div class="num" id="agentBlockedCount">0</div><small>Predecessor belum selesai</small></div><div class="icon">↗</div></div>
+ </div>
+ <div class="card agent-panel">
+  <div class="card-head"><div><h3>Prioritas tindak lanjut</h3><div class="muted" style="font-size:12px">Task diurutkan dari hambatan dan keterlambatan paling mendesak.</div></div><span id="agentUpdatedAt" class="pill s-proses">Belum dianalisis</span></div>
+  <div class="calendar-note agent-notice"><b>Analisis berbasis aturan</b> · membaca progres, target, update terakhir, dan predecessor dari data ProjectPulse. Analisis diperbarui saat halaman dimuat/disegarkan; rekomendasi perlu ditinjau.</div>
+  <div id="agentPriorityList"></div>
+ </div>
+ <div class="grid two-col agent-lower">
+  <div class="card">
+   <div class="card-head"><h3>Cara kerja asisten</h3></div>
+   <ol class="agent-steps">
+    <li><span>1</span><div><b>Baca data proyek</b><small>Progres, target selesai, PIC, update terakhir, dan predecessor.</small></div></li>
+    <li><span>2</span><div><b>Deteksi sinyal</b><small>Task terlambat, mandek, target dekat, atau terblokir pekerjaan sebelumnya.</small></div></li>
+    <li><span>3</span><div><b>Susun tindakan</b><small>Saran awal berdasarkan aturan dan rencana pemulihan yang sudah kamu catat.</small></div></li>
+    <li><span>4</span><div><b>Siapkan draft WhatsApp</b><small>Kamu tinjau dan kirim sendiri; tidak ada pesan otomatis.</small></div></li>
+   </ol>
+   <div class="footer-note" id="agentDataSource"></div>
+  </div>
+  <div class="card">
+   <div class="card-head"><div><h3>Draft follow-up PIC</h3><div class="muted" style="font-size:12px">Pilih PIC yang punya task perlu perhatian.</div></div><span class="pill s-proses">Belum dikirim</span></div>
+   <div class="field"><label for="agentPicSelect">PIC</label><select id="agentPicSelect" onchange="buildAgentDraft()"><option value="">Belum ada PIC</option></select></div>
+   <div class="field"><label for="agentDraft">Pesan WhatsApp (boleh diedit)</label><textarea id="agentDraft" rows="7" placeholder="Draft akan muncul setelah PIC dipilih."></textarea></div>
+   <div class="actions"><button class="btn-soft mini" type="button" onclick="copyAgentDraft()">Salin draft</button><button class="btn-green mini" type="button" onclick="openAgentWhatsApp()">Buka WhatsApp</button></div>
+   <div class="footer-note">WhatsApp hanya dibuka dengan draft. Kamu tetap memilih penerima dan menekan Kirim.</div>
+  </div>
+ </div>
+</section>
+<section id="projects" class="section">
   <div class="toolbar"><input id="projectSearch" placeholder="Cari nama proyek / PIC..." oninput="renderProjects()"><select id="projectFilter" onchange="renderProjects()"><option value="">Semua status</option><option>Belum dimulai</option><option>Berjalan</option><option>Selesai</option><option>Terlambat</option></select><button class="btn-primary" onclick="openProject()">＋ Tambah Proyek</button></div>
   <div id="projectList"></div>
  </section>
@@ -222,10 +257,16 @@ function projectProgress(p){let a=allSubs(p.id);if(a.length)return Math.round(a.
 function projectStatus(p){let a=allSubs(p.id);if(a.length&&a.every(s=>subProgress(s)>=100))return'Selesai';if(a.some(late))return'Terlambat';if(a.some(s=>subProgress(s)>0))return'Berjalan';return'Belum dimulai'}
 function projectName(id){return db.projects.find(p=>p.id===id)?.name||'Proyek dihapus'}
 function taskOf(id){return db.tasks.find(t=>t.id===id)}
-function go(tab){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(tab).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));let titles={dashboard:'Dashboard',projects:'Daftar Proyek',tasks:'Task & Sub-task',wbs:'WBS per Proyek',gantt:'Timeline Aktivitas',reports:'Laporan',settings:'Pengaturan'};document.getElementById('pageTitle').textContent=titles[tab];renderAll()}
+function go(tab){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(tab).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));let titles={dashboard:'Dashboard',agent:'Asisten Pengawas',projects:'Daftar Proyek',tasks:'Task & Sub-task',wbs:'WBS per Proyek',gantt:'Timeline Aktivitas',reports:'Laporan',settings:'Pengaturan'};document.getElementById('pageTitle').textContent=titles[tab];renderAll()}
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
 document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-function renderAll(){renderDashboard();renderProjects();renderTasks();fillSelects();renderWBS();renderGantt();renderMassPicOptions();generateReport()}
+function collectAgentSignals(){let out=[],nets={};db.projects.forEach(function(p){nets[p.id]=network(p)});db.subs.forEach(function(s){let progress=subProgress(s);if(progress>=100)return;let reasons=[],t=taskOf(s.taskId),p=t&&db.projects.find(function(x){return x.id===t.projectId}),net=p&&nets[p.id],blockers=(s.dependsOn||[]).map(function(id){return db.subs.find(function(x){return x.id===id})}).filter(function(x){return x&&subProgress(x)<100}),last=subLastUpdate(s),age=last?dd(last,today()):null,dueDays=s.due?dd(today(),s.due):null,isLate=late(s),isStale=progress<100&&(age!==null?age>=2:!!(s.planStart&&s.planStart<today())),isNear=dueDays!==null&&dueDays>=0&&dueDays<=7,critical=!!(net&&net.links&&net.critical.includes(s.id));if(isLate)reasons.push('Terlambat '+dd(s.due,today())+' hari');if(blockers.length)reasons.push('Terblokir predecessor');if(isStale)reasons.push(age===null?'Belum ada riwayat update':'Belum ada update '+age+' hari');if(isNear)reasons.push('Target ≤'+dueDays+' hari');if(critical)reasons.push('Jalur kritis');if(!s.pic)reasons.push('PIC belum ditentukan');if(!reasons.length)return;let score=blockers.length?0:isLate?1:critical?2:isStale?3:isNear?4:5;out.push({s:s,t:t,p:p,pic:(s.recoveryOwner||s.pic||'').trim(),progress:progress,age:age,late:isLate,stale:isStale,blocked:blockers.length>0,critical:critical,near:isNear,blockers:blockers,reasons:reasons,score:score})});return out.sort(function(a,b){return a.score-b.score||(b.age||0)-(a.age||0)})}
+function agentRecommendation(a){if(a.s.recoveryPlan)return a.s.recoveryPlan;if(a.blocked)return'Selesaikan '+a.blockers.map(function(x){return x.name}).join(', ')+' terlebih dahulu dan pastikan tanggal handoff.';if(a.late)return'Minta penyebab keterlambatan, tanggal recovery, dan aksi yang bisa dijalankan hari ini.';if(a.stale)return'Minta progres aktual, kendala, dan estimasi selesai dari PIC.';if(a.critical)return'Amankan kapasitas PIC dan cek urutan predecessor karena task ini berada di jalur kritis.';if(a.near)return'Pastikan material, alat, kapasitas workshop, dan inspeksi siap sebelum target.';return'Tetapkan PIC dan konfirmasi langkah berikutnya.'}
+function renderAgent(){let list=collectAgentSignals();window.agentSignalsCache=list;let stale=list.filter(function(x){return x.stale}).length,blocked=list.filter(function(x){return x.blocked}).length;document.getElementById('agentOpenCount').textContent=list.length;document.getElementById('agentStaleCount').textContent=stale;document.getElementById('agentBlockedCount').textContent=blocked;document.getElementById('agentUpdatedAt').textContent='Diperbarui '+new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});document.getElementById('agentDataSource').textContent=cloudReady?'Sumber: data cloud yang tersinkron.':'Sumber: data perangkat ini (offline). Sinkronkan untuk memakai data lintas perangkat.';let rows=list.slice(0,12);document.getElementById('agentPriorityList').innerHTML=rows.map(function(a){let level=a.score<=1?'Mendesak':a.score<=3?'Perlu perhatian':'Pantau',cls=a.score<=1?'s-terlambat':'s-proses',title=(a.p&&a.p.code?a.p.code+' · ':'')+(a.p?a.p.name:'Proyek')+' / '+(a.t?a.t.name:'Task');return'<div class="project-row"><div class="row-top"><strong>'+esc(a.s.name)+'</strong><span class="pill '+cls+'">'+level+'</span></div><div class="meta"><span>'+esc(title)+'</span><span>PIC: '+esc(a.pic||'Belum ditentukan')+'</span><span>Target: '+fmt(a.s.due)+'</span><span>Progress: '+a.progress+'%</span></div><div class="agent-reasons">'+a.reasons.map(function(r){return'<span class="pill '+(r.indexOf('Terlambat')===0||r==='Terblokir predecessor'?'s-terlambat':'s-proses')+'">'+esc(r)+'</span>'}).join('')+'</div><div class="agent-suggestion"><b>Saran awal:</b> '+esc(agentRecommendation(a))+'</div><button class="btn-soft mini" style="margin-top:8px" data-sub-id="'+a.s.id+'" onclick="openSubtask(this.dataset.subId)">Buka task</button></div>'}).join('')||'<div class="agent-empty">Tidak ada task terbuka yang memenuhi aturan tindak lanjut saat ini.</div>';let pics=[...new Set(list.map(function(a){return a.pic}).filter(Boolean))].sort(function(a,b){return a.localeCompare(b,'id')});let select=document.getElementById('agentPicSelect'),previous=select.value;select.innerHTML='<option value="">Pilih PIC...</option>'+pics.map(function(pic){return'<option value="'+esc(pic)+'">'+esc(pic)+'</option>'}).join('');select.disabled=!pics.length;if(pics.includes(previous))select.value=previous;else if(pics.length)select.value=pics[0];buildAgentDraft()}
+function buildAgentDraft(){let select=document.getElementById('agentPicSelect'),box=document.getElementById('agentDraft'),pic=select&&select.value,list=(window.agentSignalsCache||[]).filter(function(a){return a.pic===pic}).slice(0,8);if(!box)return;if(!pic||!list.length){box.value='Belum ada task perlu perhatian untuk PIC.';return}box.value='Halo '+pic+', mohon update pekerjaan berikut yang masih perlu perhatian:\n\n'+list.map(function(a,i){return(i+1)+'. '+(a.p?a.p.name:'Proyek')+' / '+(a.t?a.t.name:'Task')+' / '+a.s.name+' — '+a.reasons[0]+' (progress '+a.progress+'%, target '+fmt(a.s.due)+')'}).join('\n')+'\n\nMohon isi progres terbaru, kendala, dan estimasi selesai melalui link update ProjectPulse yang sudah dibagikan.'}
+async function copyAgentDraft(){let box=document.getElementById('agentDraft');if(!box||!box.value)return;try{await navigator.clipboard.writeText(box.value);toast('Draft berhasil disalin')}catch(e){box.focus();box.select();toast('Draft dipilih. Tekan Ctrl+C untuk menyalin.')}}
+function openAgentWhatsApp(){let box=document.getElementById('agentDraft');if(!box||!box.value||box.value.indexOf('Belum ada task perlu perhatian')===0){toast('Pilih PIC yang memiliki task perlu perhatian');return}window.open('https://wa.me/?text='+encodeURIComponent(box.value),'_blank')}
+function renderAll(){renderDashboard();renderAgent();renderProjects();renderTasks();fillSelects();renderWBS();renderGantt();renderMassPicOptions();generateReport()}
 function renderDashboard(){
  let ps=db.projects,subs=db.subs,done=subs.filter(s=>s.status==='Selesai').length,lateCount=subs.filter(late).length,progress=ps.length?Math.round(ps.reduce((n,p)=>n+projectProgress(p),0)/ps.length):0;
  statProjects.textContent=ps.length;statProgress.textContent=progress+'%';statDone.textContent=done;statTaskTotal.textContent='Dari '+subs.length+' sub-task';statLate.textContent=lateCount;
