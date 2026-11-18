@@ -89,7 +89,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   </div>
   <div class="card" style="margin-top:16px;border-color:#d8e5ff">
    <div class="card-head"><div><h3>Follow-up Massal PIC</h3><div class="muted" style="font-size:12px">Satu link untuk semua sub-task yang belum selesai di seluruh proyek.</div></div><span class="pill s-proses">Cloud PIC</span></div>
-   <div class="toolbar"><input id="massPicName" list="massPicOptions" placeholder="Ketik nama PIC, contoh Robby" oninput="previewMassPic()"><datalist id="massPicOptions"></datalist><button class="btn-primary" onclick="createMassPicLink()">Buat link & WhatsApp ↗</button></div>
+   <div class="toolbar"><input id="massPicName" list="massPicOptions" placeholder="Ketik nama PIC, contoh Robbi" oninput="previewMassPic()"><datalist id="massPicOptions"></datalist><button class="btn-primary" onclick="createMassPicLink()">Buat link & WhatsApp ↗</button></div>
    <p id="massPicStatus" class="footer-note">Masukkan nama PIC untuk melihat jumlah sub-task belum selesai.</p>
    <p class="muted" style="font-size:11px">Pencarian mencocokkan PIC pada sub-task atau task induk. Pembaruan yang dikirim PIC langsung masuk ke cloud.</p>
   </div>
@@ -154,8 +154,9 @@ const CLOUD_ADMIN_API=CLOUD_URL+'/functions/v1/projectpulse-admin-api';
 const CLOUD_PIC_API=CLOUD_URL+'/functions/v1/projectpulse-pic-portal';
 const cloudClient=window.supabase.createClient(CLOUD_URL,CLOUD_KEY);
 let cloudSession=null,cloudReady=false,cloudSaveTimer=null;
-let db=load();
+let db=load();if(normalizeLegacyPicNames(db))localStorage.setItem(KEY,JSON.stringify(db));
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||{projects:[],tasks:[],subs:[],activity:[]}}catch(e){return{projects:[],tasks:[],subs:[],activity:[]}}}
+function normalizeLegacyPicNames(root){let changed=0;function visit(v,key){if(Array.isArray(v)){return v.map(function(x){if(['picList','pics','picNames'].includes(key)&&x==='Robby'){changed++;return'Robbi'}return visit(x,key)})}if(v&&typeof v==='object'){Object.keys(v).forEach(function(k){if(['pic','pic_name','picName'].includes(k)&&v[k]==='Robby'){v[k]='Robbi';changed++}else v[k]=visit(v[k],k)})}return v}visit(root,'');return changed}
 function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(cloudReady&&cloudSession){clearTimeout(cloudSaveTimer);cloudSaveTimer=setTimeout(function(){cloudApi('put_state',{payload:db}).then(function(){setCloudFoot(true);setCloudStatus('Tersinkron ke cloud · '+new Date().toLocaleTimeString('id-ID'))}).catch(function(e){setCloudFoot(false);setCloudStatus('Sinkronisasi gagal: '+e.message)})},700)}}
 function setCloudStatus(s){let e=document.getElementById('cloudStatus');if(e)e.textContent=s}
 function setCloudFoot(connected){let e=document.getElementById('cloudFoot');if(e)e.textContent='Design by Assifa Yuichiro'}
