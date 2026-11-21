@@ -1,0 +1,89 @@
+openapi: 3.1.0
+info:
+  title: ProjectPulse Monitoring
+  version: 1.0.0
+  description: Cari pekerjaan ProjectPulse dan siapkan usulan perubahan untuk ditinjau oleh admin.
+servers:
+  - url: https://wfgqhjrvabjoorcexmhy.supabase.co/functions/v1/projectpulse-chatgpt
+security:
+  - actionKey: []
+paths:
+  /search:
+    post:
+      operationId: searchProjectPulseWork
+      x-openai-isConsequential: false
+      summary: Cari task dan subtugas dalam satu proyek
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [project]
+              additionalProperties: false
+              properties:
+                project:
+                  type: string
+                  description: Kode atau nama proyek yang persis, tanpa membedakan huruf besar dan kecil.
+                keyword:
+                  type: string
+                  description: Potongan nama task atau subtugas.
+                offset:
+                  type: integer
+                  minimum: 0
+                  description: Nilai nextOffset dari halaman sebelumnya.
+      responses:
+        '200':
+          description: Target, progres saat ini, dan daftar PIC yang tersedia.
+  /propose:
+    post:
+      operationId: proposeProjectPulseChange
+      x-openai-isConsequential: false
+      summary: Siapkan satu usulan perubahan tanpa menyimpannya
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [kind, id, patch]
+              additionalProperties: false
+              properties:
+                kind:
+                  type: string
+                  enum: [task, subtask]
+                id:
+                  type: string
+                  description: ID target dari hasil pencarian.
+                patch:
+                  type: object
+                  minProperties: 1
+                  additionalProperties: false
+                  properties:
+                    name:
+                      type: string
+                      maxLength: 200
+                    pic:
+                      type: string
+                      description: Nama PIC dari hasil pencarian. String kosong melepas PIC jika diminta.
+                    progress:
+                      type: integer
+                      minimum: 0
+                      maximum: 100
+                      description: Khusus subtugas. Progres task dihitung otomatis.
+                    note:
+                      type: string
+                      maxLength: 2000
+                      description: Khusus subtugas.
+                    description:
+                      type: string
+                      maxLength: 2000
+                      description: Khusus task.
+      responses:
+        '200':
+          description: Nilai sebelum dan sesudah, masa berlaku, serta tautan persetujuan admin.
+components:
+  securitySchemes:
+    actionKey:
+      type: http
+      scheme: bearer

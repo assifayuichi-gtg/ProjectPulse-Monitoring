@@ -265,6 +265,15 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
  </section>
 
  <section id="settings" class="section">
+   <div id="chatgptApproval" class="card" style="margin-bottom:14px" hidden>
+    <h3>Persetujuan perubahan dari ChatGPT</h3>
+    <p id="chatgptApprovalMessage" class="muted" role="status">Login admin, lalu tinjau usulan.</p>
+    <pre id="chatgptApprovalPreview" class="report-box" hidden></pre>
+    <div class="actions">
+     <button id="chatgptReviewButton" class="btn-soft" type="button">Tinjau usulan</button>
+     <button id="chatgptApplyButton" class="btn-primary" type="button" hidden>Setujui dan simpan</button>
+    </div>
+   </div>
    <div class="card"><h3>Sinkronisasi Cloud</h3><p class="muted">Login admin untuk menyinkronkan ProjectPulse antar komputer. Pada koneksi pertama, Anda memilih apakah data lokal dikirim ke cloud atau data cloud dimuat ke browser ini.</p><div class="field"><label>Email admin</label><input id="cloudEmail" type="email" autocomplete="username" placeholder="Email akun admin"></div><div class="field"><label>Password</label><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Password akun admin"></div><div class="actions"><button class="btn-primary" onclick="cloudLogin()">Login & Sinkronkan</button><button class="btn-soft" onclick="cloudSignUp()">Petunjuk buat akun admin</button><button class="btn-plain" onclick="cloudLogout()">Logout</button></div><p id="cloudStatus" class="footer-note">Belum terhubung. Akun perlu diberi peran admin ProjectPulse.</p><button id="cloudReloadBtn" class="btn-soft mini" onclick="reloadCloudState()" hidden>Muat Cloud Terbaru</button></div>
   <div class="card" style="margin-top:14px"><div class="card-head"><div><h3>Kelola tautan PIC</h3><p class="muted" style="margin:4px 0 0">Tautan berlaku 14 hari dan hanya dapat mengirim satu update. Untuk menerbitkan ulang, buat tautan baru dari task lalu batalkan tautan lama di sini.</p></div><button class="btn-soft mini" onclick="loadPicLinks()">Muat tautan</button></div><div id="picLinksList" class="muted">Tekan “Muat tautan” untuk melihat tautan terbaru.</div></div>
   <div class="grid two-col">
@@ -497,7 +506,81 @@ function sendPortalCode(){let d=window.picPayload,msg='Update ProjectPulse - '+(
 function applyPicUpdate(){try{let raw=picUpdateCode.value.trim(),d=JSON.parse(decodeURIComponent(escape(atob(raw))));let updates=d.type==='ProjectPulsePICBatchUpdate'?d.updates:[d];if(!['ProjectPulsePICUpdate','ProjectPulsePICBatchUpdate'].includes(d.type))throw Error('Format salah');let simulated=Object.fromEntries(db.subs.map(s=>[s.id,subProgress(s)]));for(let u of updates){if(u.itemType==='wbsTask'||u.itemType==='wbsSub')continue;let s=db.subs.find(x=>x.id===u.id);if(!s)continue;if(Number(u.progress)>simulated[s.id]){let blocked=(s.dependsOn||[]).filter(id=>(simulated[id]||0)<100);if(blocked.length)throw Error('Update ditahan. Selesaikan predecessor untuk '+s.name+': '+blocked.map(id=>db.subs.find(x=>x.id===id)?.name||id).join(', '))}simulated[s.id]=Number(u.progress)||0}let missing=[];updates.forEach(u=>{if(u.itemType==='wbsTask'||u.itemType==='wbsSub'){var parent=u.itemType==='wbsTask'?taskOf(u.taskId):db.subs.find(x=>x.id===u.subId),w=parent&&(parent.wbs||[]).find(x=>x.id===u.id);if(!w){missing.push(u.id);return}w.progress=u.progress;w.status=u.status;w.note=u.note;w.history=w.history||[];w.history.push({status:u.status,progress:u.progress,date:u.updatedAt});if(u.actualStart&&!w.actualStart)w.actualStart=u.actualStart;if(u.actualEnd)w.actualEnd=u.actualEnd;log('Update PIC WBS diterima: '+w.name+' → '+u.progress+'%');return}var s=db.subs.find(x=>x.id===u.id);if(!s){missing.push(u.id);return}let previousProgress=subProgress(s);s.progress=u.progress;s.status=u.status;s.note=u.note;s.lastUpdatedAt=u.updatedAt||today();if(Number(u.progress)!==previousProgress)s.lastProgressAt=s.lastUpdatedAt;s.history=s.history||[];s.history.push({status:u.status,progress:u.progress,date:u.updatedAt,updatedAt:u.updatedAt});if(u.actualStart&&!s.actualStart)s.actualStart=u.actualStart;if(u.actualEnd)s.actualEnd=u.actualEnd;log('Update PIC diterima: '+s.name+' → '+u.progress+'%')});if(missing.length)throw Error(missing.length+' sub-task tidak ditemukan. Pastikan data proyek utama sama dengan data saat link dibuat.');picUpdateCode.value='';save();toast(updates.length+' update PIC berhasil diterapkan sekaligus')}catch(e){alert('Gagal menerapkan update: '+e.message)}}
 
 sStatus.addEventListener('change',()=>{let v=sStatus.value,pr=v==='Selesai'?100:v==='Sedang dikerjakan'?Math.max(5,Number(sProgressNum.value)||50):0;sProgress.value=pr;sProgressNum.value=pr});
-reportDate.value=today();renderAll();restoreCloudSession();if(location.hash.startsWith('#piccloud='))showCloudPicPortal(location.hash.slice('#piccloud='.length));else if(location.hash.startsWith('#picupdate='))showPicPortal();showWhatsNewOnce();
+const chatgptApproval = document.getElementById('chatgptApproval');
+const chatgptMessage = document.getElementById('chatgptApprovalMessage');
+const chatgptPreview = document.getElementById('chatgptApprovalPreview');
+const chatgptReviewButton = document.getElementById('chatgptReviewButton');
+const chatgptApplyButton = document.getElementById('chatgptApplyButton');
+let reviewedChatgptToken = null;
+function chatgptToken() {
+  return location.hash.startsWith('#chatgpt=') ? location.hash.slice(9) : '';
+}
+function openChatgptApproval() {
+  const token = chatgptToken();
+  reviewedChatgptToken = null;
+  chatgptApproval.hidden = !token;
+  chatgptPreview.hidden = true;
+  chatgptPreview.textContent = '';
+  chatgptApplyButton.hidden = true;
+  chatgptMessage.textContent = 'Login admin dengan formulir di bawah, lalu tinjau usulan.';
+  if (token) go('settings');
+}
+async function handleChatgptApproval(operation) {
+  const token = chatgptToken();
+  if (!token) return;
+  if (operation === 'apply' &&
+      (token !== reviewedChatgptToken || !confirm('Setujui perubahan yang ditampilkan dan simpan ke cloud?'))) return;
+  chatgptReviewButton.disabled = true;
+  chatgptApplyButton.disabled = true;
+  chatgptMessage.textContent = 'Menghubungi ProjectPulse…';
+  try {
+    const { data } = await cloudClient.auth.getSession();
+    if (!data.session || !cloudReady) throw Error('Login dan sinkronkan akun admin terlebih dahulu.');
+    const response = await fetch(CLOUD_URL + '/functions/v1/projectpulse-chatgpt/' + operation, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + data.session.access_token },
+      body: JSON.stringify({ token }),
+    });
+    const result = await response.json();
+    if (token !== chatgptToken()) return;
+    if (!response.ok) throw Error(result.error || 'Permintaan gagal.');
+    if (result.status === 'applied' || result.status === 'already_applied') {
+      reviewedChatgptToken = null;
+      chatgptApplyButton.hidden = true;
+      chatgptMessage.textContent = 'Perubahan tersimpan di cloud. Cadangkan edit lokal yang belum tersinkron, lalu muat ulang dashboard untuk melihat hasilnya.';
+      return;
+    }
+    const preview = result.preview;
+    const labels = { name:'Nama', pic:'PIC', progress:'Progres (%)', note:'Catatan',
+      desc:'Deskripsi', status:'Status', actualStart:'Mulai aktual', actualEnd:'Selesai aktual' };
+    chatgptPreview.textContent = [
+      [preview.project.code, preview.project.name].filter(Boolean).join(' · '),
+      preview.kind === 'subtask' ? preview.task + ' / ' + preview.name : preview.name,
+      ...Object.entries(preview.changes).map(([field, change]) =>
+        (labels[field] || field) + '\nSebelum: ' + (change.before === '' ? '—' : change.before) +
+        '\nSesudah: ' + (change.after === '' ? '—' : change.after)),
+    ].join('\n\n');
+    chatgptPreview.hidden = false;
+    chatgptApplyButton.hidden = false;
+    reviewedChatgptToken = token;
+    chatgptMessage.textContent = 'Periksa nilai sebelum dan sesudah menyetujui.';
+  } catch (error) {
+    if (token === chatgptToken()) {
+      chatgptMessage.textContent = error.message;
+    }
+  } finally {
+    chatgptReviewButton.disabled = false;
+    chatgptApplyButton.disabled = false;
+  }
+}
+chatgptReviewButton.onclick = () => handleChatgptApproval('review');
+chatgptApplyButton.onclick = () => handleChatgptApproval('apply');
+window.addEventListener('hashchange', openChatgptApproval);
+reportDate.value=today();renderAll();restoreCloudSession();
+if(location.hash.startsWith('#piccloud='))showCloudPicPortal(location.hash.slice('#piccloud='.length));
+else if(location.hash.startsWith('#picupdate='))showPicPortal();
+else if(chatgptToken())openChatgptApproval();
+else showWhatsNewOnce();
 </script>
 </body></html>
 
