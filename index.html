@@ -427,9 +427,12 @@ function normalizePriority(v){return v==='Normal'?'Sedang':v==='Urgent'?'Tinggi'
 
 const initialPicNames=['Robbi','Bima','Ifah','Huda','Chiro','Miftahul','Maytasya','Mekanik','Machinist','QC','Welder','Painter & Sandblaster'];
 function picDirectory(){
-  if(Array.isArray(db.picDirectory))return db.picDirectory;
+  const requiredNames=[...woInspectionPics,...woDocumentPics,...woJsePics,'PC'];
+  if(Array.isArray(db.picDirectory)){
+    return [...db.picDirectory,...requiredNames.filter(name=>!db.picDirectory.some(person=>woSamePic(person.name,name))).map(name=>({id:'initial-'+name,name,active:true}))];
+  }
   const assignments=[...db.projects,...db.tasks,...db.subs];
-  const names=new Map(initialPicNames.map(name=>[name.toLocaleLowerCase('id'),name]));
+  const names=new Map([...initialPicNames,...requiredNames].map(name=>[name.toLocaleLowerCase('id'),name]));
   for(const record of assignments){
     for(const value of [record.pic,...(record.wbs||[]).map(process=>process.pic)]){
       const name=String(value||'').trim();
