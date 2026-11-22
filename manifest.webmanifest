@@ -1,0 +1,32 @@
+{
+  "id": "./",
+  "name": "Repair Monitor",
+  "short_name": "Repair Monitor",
+  "description": "Pemantauan proyek perbaikan pompa dan progres kerja.",
+  "lang": "id",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EFE5D2",
+  "theme_color": "#710912",
+  "icons": [
+    {
+      "src": "icons/repair-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/repair-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/repair-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

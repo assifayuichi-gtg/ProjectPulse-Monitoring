@@ -19,6 +19,11 @@ function renderDeviceStatus(){
   const badge=document.getElementById('headerSync');
   if(!badge)return;
   const pending=!!meta.pending;
+  const offline=document.getElementById('offlineWorkspaceState');
+  offline.hidden=deviceOnline;
+  offline.textContent=db.projects.length?
+    'Mode offline · menampilkan data terakhir yang tersimpan di perangkat ini.':
+    'Belum ada data proyek di perangkat ini. Sambungkan internet dan sinkronkan untuk mengisi salinan offline.';
   const connection=!deviceOnline?'Offline':cloudReady?'Online · Cloud terhubung':'Online · Cloud belum terhubung';
   document.getElementById('headerSyncConnection').textContent=connection;
   document.getElementById('headerSyncTime').textContent='Sinkron terakhir: '+formatDeviceTime(meta.syncAt);
