@@ -284,7 +284,11 @@ async function repairReportExcel(report){
       cell.font={bold:true,color:{argb:'FFFFFFFF'}};
       cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FF710912'}};
     });
-    sheet.columns.forEach(column=>{column.width=32;column.alignment={vertical:'top',wrapText:true};});
+    for(let index=1;index<=headers.length;index++){
+      const column=sheet.getColumn(index);
+      column.width=32;
+      column.alignment={vertical:'top',wrapText:true};
+    }
     sheet.autoFilter={from:{row:5,column:1},to:{row:5,column:headers.length}};
     for(let row=6;row<=sheet.rowCount;row++){
       const lines=Math.max(...sheet.getRow(row).values.slice(1).map(value=>String(value??'').split('\n').reduce((sum,line)=>sum+Math.max(1,Math.ceil(line.length/30)),0)));
