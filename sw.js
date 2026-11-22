@@ -1,12 +1,12 @@
 const scope=new URL(self.registration.scope);
 const shell=new URL('index.html',scope);
 const cachePrefix='repair-monitor-shell-';
-const cacheName=cachePrefix+'v1';
+const cacheName=cachePrefix+'v2';
 const assets=[
   'repair-followup.js?v=7',
   'repair-settings.js?v=6.1',
   'repair-report.js?v=5.2',
-  'repair-pwa.js?v=1',
+  'repair-pwa.js?v=2',
   'assets/supabase-2.119.2.js',
   'manifest.webmanifest',
   'icons/repair-192.png',

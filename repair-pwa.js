@@ -42,14 +42,16 @@ function initializeRepairPwa(){
     document.getElementById('pwaInstallButton').hidden=true;
   });
   const register=async ()=>{
+    const statusTimer=setTimeout(()=>{
+      completeRepairPwaStatus('Persiapan offline masih berjalan. Kamu bisa memasang lewat menu Chrome atau Safari, lalu buka aplikasi saat online.');
+    },8000);
     try{
       await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
       await navigator.serviceWorker.ready;
       completeRepairPwaStatus('Aplikasi siap dibuka offline. Data yang tersedia adalah salinan terakhir pada perangkat ini.');
     }catch{
       completeRepairPwaStatus('Persiapan offline belum selesai. Muat ulang halaman saat terhubung ke internet.');
-    }
+    }finally{clearTimeout(statusTimer);}
   };
-  if(document.readyState==='complete')void register();
-  else window.addEventListener('load',register,{once:true});
+  void register();
 }
