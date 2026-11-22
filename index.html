@@ -148,6 +148,17 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
 @media(max-width:650px){.whats-new-trigger{min-height:40px}.whats-new-item{padding:11px 12px}}
 </style>
 
+<style id="projectpulse-v2-style">
+.v2-intro{max-width:1120px}.v2-intro .card-head{flex-wrap:wrap}.v2-intro .field select{max-width:100%}
+.v2-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:14px 0}
+.v2-kpis div,.v2-order{border:1px solid var(--line);border-radius:10px;padding:12px;background:#fffaf0;min-width:0}
+.v2-kpis strong{display:block;color:var(--burgundy);font-size:22px}
+.v2-order{margin:12px 0}.v2-order h4{margin:0;overflow-wrap:anywhere}.v2-step{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}
+.v2-logout{display:none}.v2-restricted .v2-logout{display:inline-block}
+.v2-restricted .nav [data-tab]:not([data-tab="workflow"]),.v2-restricted .top-actions,.v2-restricted .nav-divider,.v2-restricted .section:not(#workflow){display:none!important}
+#v2Status:empty{display:none}#v2Status{padding:10px;background:#eee2cb;border-radius:8px}#v2Content form{margin:12px 0}.v2-check{color:var(--green)}
+@media(max-width:650px){.v2-step{flex-wrap:wrap}.v2-order{padding:10px}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -156,6 +167,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
  <div class="nav-label">WORKSPACE</div>
  <nav class="nav">
   <button class="active" data-tab="dashboard" title="NEW · Grafik ketepatan pengiriman dan rata-rata TAT."><span>▦</span> Dashboard <span class="update-new-badge">NEW</span></button>
+  <button data-tab="workflow" title="NEW · Dashboard per peran, progres berbobot, dan serah terima MO."><span>⤷</span> Alur V2 <span class="update-new-badge">NEW</span></button>
   <button data-tab="projects"><span>◫</span> Proyek</button>
   <button data-tab="tasks" title="NEW · Validasi predecessor kini ditegakkan juga di backend saat update PIC."><span>☷</span> Tugas & Subtugas <span class="update-new-badge">NEW</span></button>
   <button data-tab="wbs"><span>▤</span> WBS per Proyek</button>
@@ -268,7 +280,15 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   </div>
  </section>
 
- <section id="settings" class="section">
+ <section id="workflow" class="section">
+  <div class="card v2-intro">
+    <div class="card-head"><div><h3 id="v2RoleTitle">Alur Engineering & Workshop</h3><p id="v2RoleHelp" class="muted">Login cloud untuk membuka alur berdasarkan peran akun.</p></div><div class="actions"><button class="btn-soft" type="button" onclick="loadWorkflow()">Muat Ulang</button><button class="btn-plain v2-logout" type="button" onclick="cloudLogout()">Keluar</button></div></div>
+    <p id="v2Status" role="status"></p>
+    <div class="field"><label for="v2Project">Work Order</label><select id="v2Project" onchange="renderWorkflow()"></select></div>
+    <div id="v2Content"></div>
+  </div>
+</section>
+<section id="settings" class="section">
   <div class="grid two-col" style="margin-bottom:16px">
     <section class="card" aria-labelledby="directoryTitle">
       <h3 id="directoryTitle">Daftar PIC <span class="update-new-badge">NEW</span></h3>
@@ -295,7 +315,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
      <button id="chatgptApplyButton" class="btn-primary" type="button" hidden>Setujui dan simpan</button>
     </div>
    </div>
-   <div class="card"><h3>Sinkronisasi Cloud</h3><p class="muted">Login admin untuk menyinkronkan ProjectPulse antar komputer. Pada koneksi pertama, Anda memilih apakah data lokal dikirim ke cloud atau data cloud dimuat ke browser ini.</p><div class="field"><label>Email admin</label><input id="cloudEmail" type="email" autocomplete="username" placeholder="Email akun admin"></div><div class="field"><label>Password</label><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Password akun admin"></div><div class="actions"><button class="btn-primary" onclick="cloudLogin()">Login & Sinkronkan</button><button class="btn-soft" onclick="cloudSignUp()">Petunjuk buat akun admin</button><button class="btn-plain" onclick="cloudLogout()">Logout</button></div><p id="cloudStatus" class="footer-note">Belum terhubung. Akun perlu diberi peran admin ProjectPulse.</p><button id="cloudReloadBtn" class="btn-soft mini" onclick="reloadCloudState()" hidden>Muat Cloud Terbaru</button></div>
+   <div class="card"><h3>Sinkronisasi Cloud</h3><p class="muted">Login admin untuk menyinkronkan ProjectPulse antar komputer. Pada koneksi pertama, Anda memilih apakah data lokal dikirim ke cloud atau data cloud dimuat ke browser ini.</p><div class="field"><label>Email akun ProjectPulse</label><input id="cloudEmail" type="email" autocomplete="username" placeholder="Email akun ProjectPulse"></div><div class="field"><label>Password</label><input id="cloudPassword" type="password" autocomplete="current-password" placeholder="Password akun admin"></div><div class="actions"><button class="btn-primary" onclick="cloudLogin()">Login & Sinkronkan</button><button class="btn-soft" onclick="cloudSignUp()">Petunjuk buat akun admin</button><button class="btn-plain" onclick="cloudLogout()">Logout</button></div><p id="cloudStatus" class="footer-note">Belum terhubung. Akun perlu diberi peran admin ProjectPulse.</p><button id="cloudReloadBtn" class="btn-soft mini" onclick="reloadCloudState()" hidden>Muat Cloud Terbaru</button></div>
   <div class="card" style="margin-top:14px"><div class="card-head"><div><h3>Kelola tautan PIC</h3><p class="muted" style="margin:4px 0 0">Tautan berlaku 14 hari dan hanya dapat mengirim satu update. Untuk menerbitkan ulang, buat tautan baru dari task lalu batalkan tautan lama di sini.</p></div><button class="btn-soft mini" onclick="loadPicLinks()">Muat tautan</button></div><div id="picLinksList" class="muted">Tekan “Muat tautan” untuk melihat tautan terbaru.</div></div>
   <div class="grid two-col">
    <div class="card"><h3>Backup & Restore</h3><p class="muted">Simpan data proyek sebagai file JSON agar bisa dipindahkan atau dipulihkan di perangkat lain.</p><div class="actions"><button class="btn-primary" onclick="exportData()">Download Backup JSON</button><label class="btn-soft" for="importFile">Import Backup JSON</label><input id="importFile" type="file" accept=".json,application/json" style="display:none" onchange="importData(event)"></div></div>
@@ -308,7 +328,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
 </main>
 </div>
 
-<div class="modal" id="whatsNewModal" role="dialog" aria-modal="true" aria-labelledby="whatsNewTitle"><div class="modal-box"><div class="modal-head"><div><div class="whats-new-date">Pembaruan terbaru · 22 Nov 2026</div><h2 id="whatsNewTitle">Apa yang Baru di Repair Monitor?</h2></div><button class="btn-plain" onclick="closeModal('whatsNewModal')" aria-label="Tutup">✕</button></div><p class="muted">Tiga pembaruan untuk pelaporan workshop, pengelolaan PIC, dan penelusuran perubahan.</p><div class="whats-new-list"><article class="whats-new-item"><h3>Daftar PIC dinamis</h3><p>Tambah, nonaktifkan, atau aktifkan kembali PIC lewat Pengaturan.</p></article><article class="whats-new-item"><h3>KPI pengiriman dan TAT</h3><p>Lihat persentase tepat waktu dan rata-rata hari pengerjaan di Dashboard.</p></article><article class="whats-new-item"><h3>Riwayat perubahan cloud</h3><p>Lihat siapa, kapan, serta nilai sebelum dan sesudah perubahan di Pengaturan.</p></article><details><summary>Pembaruan 21 November</summary><article class="whats-new-item"><h3>Sinkronisasi cloud lebih aman</h3><p>Jika data cloud berubah lebih dulu, sistem menahan simpanan yang berpotensi menimpa perubahan tersebut dan menampilkan tombol <b>Muat Cloud Terbaru</b>.</p></article><article class="whats-new-item"><h3>Predecessor diperiksa di backend</h3><p>Update PIC untuk proses berikutnya ditolak server selama pekerjaan pendahulu belum selesai.</p></article><article class="whats-new-item"><h3>Kelola tautan PIC</h3><p>Di Pengaturan, lihat status tautan, batalkan tautan aktif, lalu buat tautan pengganti dari task bila diperlukan. Tautan berlaku 14 hari dan hanya bisa mengirim satu update.</p></article></details></div><div class="modal-actions"><button class="btn-primary" onclick="closeModal('whatsNewModal')">Mengerti</button></div></div></div>
+<div class="modal" id="whatsNewModal" role="dialog" aria-modal="true" aria-labelledby="whatsNewTitle"><div class="modal-box"><div class="modal-head"><div><div class="whats-new-date">Pembaruan terbaru · ProjectPulse V2</div><h2 id="whatsNewTitle">Apa yang Baru di Repair Monitor?</h2></div><button class="btn-plain" onclick="closeModal('whatsNewModal')" aria-label="Tutup">✕</button></div><p class="muted">Satu alur untuk engineering, serah terima MO, workshop, dan pengiriman.</p><div class="whats-new-list"><article class="whats-new-item"><h3>Dashboard per peran</h3><p>PIC A, MRE, Project Control, dan PM melihat bagian alur yang sesuai dengan akun mereka.</p></article><article class="whats-new-item"><h3>Serah terima MO dan progres berbobot</h3><p>Engineering dan workshop dihitung terpisah. Workshop berjalan setelah PIC C menerima MO.</p></article><article class="whats-new-item"><h3>Penutupan proyek</h3><p>PM atau admin menutup proyek V2 setelah pekerjaan selesai dan tanggal pengiriman aktual diisi.</p></article><details><summary>Pembaruan sebelumnya</summary><article class="whats-new-item"><h3>Daftar PIC dinamis</h3><p>Tambah, nonaktifkan, atau aktifkan kembali PIC lewat Pengaturan.</p></article><article class="whats-new-item"><h3>KPI pengiriman dan TAT</h3><p>Lihat persentase tepat waktu dan rata-rata hari pengerjaan di Dashboard.</p></article><article class="whats-new-item"><h3>Riwayat perubahan cloud</h3><p>Lihat siapa, kapan, serta nilai sebelum dan sesudah perubahan di Pengaturan.</p></article><details><summary>Pembaruan 21 November</summary><article class="whats-new-item"><h3>Sinkronisasi cloud lebih aman</h3><p>Jika data cloud berubah lebih dulu, sistem menahan simpanan yang berpotensi menimpa perubahan tersebut dan menampilkan tombol <b>Muat Cloud Terbaru</b>.</p></article><article class="whats-new-item"><h3>Predecessor diperiksa di backend</h3><p>Update PIC untuk proses berikutnya ditolak server selama pekerjaan pendahulu belum selesai.</p></article><article class="whats-new-item"><h3>Kelola tautan PIC</h3><p>Di Pengaturan, lihat status tautan, batalkan tautan aktif, lalu buat tautan pengganti dari task bila diperlukan. Tautan berlaku 14 hari dan hanya bisa mengirim satu update.</p></article></details></details></div><div class="modal-actions"><button class="btn-primary" onclick="closeModal('whatsNewModal')">Mengerti</button></div></div></div>
 <div class="modal" id="projectModal"><div class="modal-box"><div class="modal-head"><h2 id="projectModalTitle">Tambah Proyek</h2><button class="btn-plain" onclick="closeModal('projectModal')">✕</button></div><form id="projectForm"><input type="hidden" id="pId"><div class="form-grid">
  <div class="field span2"><label>Nama proyek *</label><input id="pName" required placeholder="Contoh: Overhaul Pump P-101"></div>
  <div class="field"><label>Nomor SO / Job No.</label><input id="pCode" placeholder="SO / WO"></div><div class="field"><label>PIC utama</label><select id="pPic" class="pic-select"><option value="">Pilih PIC</option></select></div>
@@ -357,17 +377,17 @@ let cloudSession=null,cloudReady=false,cloudSaveTimer=null,cloudRevision=null,cl
 let db=load();if(normalizeLegacyPicNames(db))localStorage.setItem(KEY,JSON.stringify(db));
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||{projects:[],tasks:[],subs:[],activity:[]}}catch(e){return{projects:[],tasks:[],subs:[],activity:[]}}}
 function normalizeLegacyPicNames(root){let changed=0;function visit(v,key){if(Array.isArray(v)){return v.map(function(x){if(['picList','pics','picNames'].includes(key)&&x==='Robby'){changed++;return'Robbi'}return visit(x,key)})}if(v&&typeof v==='object'){Object.keys(v).forEach(function(k){if(['pic','pic_name','picName'].includes(k)&&v[k]==='Robby'){v[k]='Robbi';changed++}else v[k]=visit(v[k],k)})}return v}visit(root,'');return changed}
-function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(cloudReady&&cloudSession&&!cloudConflict){clearTimeout(cloudSaveTimer);let snapshot=JSON.stringify(db);cloudSaveTimer=setTimeout(function(){cloudSaveQueue=cloudSaveQueue.catch(function(){}).then(async function(){if(!cloudReady||!cloudSession||cloudConflict)return;try{let out=await cloudApi('put_state',{payload:JSON.parse(snapshot),expectedRevision:cloudRevision});cloudRevision=out.revision;setCloudFoot(true);setCloudStatus(snapshot===JSON.stringify(db)?'Tersinkron ke cloud · '+new Date().toLocaleTimeString('id-ID'):'Ada perubahan baru · menyinkronkan lagi…');if(snapshot!==JSON.stringify(db))save()}catch(e){setCloudFoot(false);if(e.code==='REVISION_CONFLICT'){cloudConflict=true;let b=document.getElementById('cloudReloadBtn');if(b)b.hidden=false;setCloudStatus('Konflik sinkronisasi: cloud berubah dari perangkat lain. Data lokal tetap tersimpan; muat cloud terbaru sebelum melanjutkan.')}else setCloudStatus('Sinkronisasi gagal: '+e.message)}})},700)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(cloudReady&&cloudSession&&!cloudConflict){clearTimeout(cloudSaveTimer);let snapshot=JSON.stringify(db);cloudSaveTimer=setTimeout(function(){cloudSaveQueue=cloudSaveQueue.catch(function(){}).then(async function(){if(!cloudReady||!cloudSession||cloudConflict)return;try{let out=await cloudApi('put_state',{payload:JSON.parse(snapshot),expectedRevision:cloudRevision});cloudRevision=out.revision;v2CloudBaseline=snapshot;setCloudFoot(true);setCloudStatus(snapshot===JSON.stringify(db)?'Tersinkron ke cloud · '+new Date().toLocaleTimeString('id-ID'):'Ada perubahan baru · menyinkronkan lagi…');if(snapshot!==JSON.stringify(db))save()}catch(e){setCloudFoot(false);if(e.code==='REVISION_CONFLICT'){cloudConflict=true;let b=document.getElementById('cloudReloadBtn');if(b)b.hidden=false;setCloudStatus('Konflik sinkronisasi: cloud berubah dari perangkat lain. Data lokal tetap tersimpan; muat cloud terbaru sebelum melanjutkan.')}else setCloudStatus('Sinkronisasi gagal: '+e.message)}})},700)}}
 function setCloudStatus(s){let e=document.getElementById('cloudStatus');if(e)e.textContent=s}
 function setCloudFoot(connected){let e=document.getElementById('cloudFoot');if(e)e.textContent='Design by Assifa Yuichiro'}
 async function cloudApi(action,extra){if(!cloudSession)throw Error('Silakan login admin terlebih dahulu');let x=await cloudClient.auth.getSession();if(!x.data.session)throw Error('Sesi login habis');cloudSession=x.data.session;let r=await fetch(CLOUD_ADMIN_API,{method:'POST',headers:{'Content-Type':'application/json','apikey':CLOUD_KEY,'Authorization':'Bearer '+cloudSession.access_token},body:JSON.stringify(Object.assign({action:action},extra||{}))});let d=await r.json();if(!r.ok){let e=Error(d.error||'Permintaan API gagal');e.code=d.code||'';e.status=r.status;throw e}return d}
-async function cloudLogin(){let email=document.getElementById('cloudEmail').value.trim(),password=document.getElementById('cloudPassword').value;if(!email||!password){alert('Isi email dan password admin.');return}setCloudStatus('Menghubungkan ke cloud…');let x=await cloudClient.auth.signInWithPassword({email:email,password:password});if(x.error){setCloudStatus('Login gagal: '+x.error.message);return}cloudSession=x.data.session;try{let remote=await cloudApi('get_state'),local=load();if(remote.payload){if(!confirm('Data cloud ditemukan. Muat data cloud ke browser ini?')){await cloudLogout();return}db=remote.payload;localStorage.setItem(KEY,JSON.stringify(db));cloudRevision=remote.revision;cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · data cloud dimuat.')}else{if(!confirm('Cloud masih kosong. Kirim data lokal browser ini ke cloud untuk memulai sinkronisasi?')){await cloudLogout();return}db=local;let created=await cloudApi('put_state',{payload:db,expectedRevision:null});cloudRevision=created.revision;cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · data awal berhasil dikirim ke cloud.')}}catch(e){cloudReady=false;setCloudFoot(false);setCloudStatus(e.message+' · pastikan akun memiliki peran admin ProjectPulse.')}}
-async function reloadCloudState(){if(!cloudSession)return;try{let remote=await cloudApi('get_state');if(!remote.payload)return setCloudStatus('Cloud belum memiliki data.');if(!confirm('Muat versi cloud terbaru? Perubahan lokal yang belum tersinkron perlu dibackup dahulu.'))return;db=remote.payload;cloudRevision=remote.revision;cloudConflict=false;localStorage.setItem(KEY,JSON.stringify(db));let b=document.getElementById('cloudReloadBtn');if(b)b.hidden=true;renderAll();setCloudFoot(true);setCloudStatus('Versi cloud terbaru dimuat.')}catch(e){setCloudStatus('Gagal memuat cloud: '+e.message)}}
+async function cloudLogin(){let email=document.getElementById('cloudEmail').value.trim(),password=document.getElementById('cloudPassword').value;if(!email||!password){alert('Isi email dan password akun ProjectPulse.');return}setCloudStatus('Menghubungkan ke cloud…');let x=await cloudClient.auth.signInWithPassword({email:email,password:password});if(x.error){setCloudStatus('Login gagal: '+x.error.message);return}cloudSession=x.data.session;try{if(await openRestrictedWorkflow())return;let remote=await cloudApi('get_state'),local=load();if(remote.payload){if(!confirm('Data cloud ditemukan. Muat data cloud ke browser ini?')){await cloudLogout();return}db=remote.payload;localStorage.setItem(KEY,JSON.stringify(db));cloudRevision=remote.revision;v2CloudBaseline=JSON.stringify(db);cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · data cloud dimuat.')}else{if(!confirm('Cloud masih kosong. Kirim data lokal browser ini ke cloud untuk memulai sinkronisasi?')){await cloudLogout();return}db=local;let created=await cloudApi('put_state',{payload:db,expectedRevision:null});cloudRevision=created.revision;v2CloudBaseline=JSON.stringify(db);cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · data awal berhasil dikirim ke cloud.')}}catch(e){cloudReady=false;setCloudFoot(false);setCloudStatus(e.message+' · pastikan akun memiliki peran admin ProjectPulse.')}}
+async function reloadCloudState(){if(!cloudSession)return;try{let remote=await cloudApi('get_state');if(!remote.payload)return setCloudStatus('Cloud belum memiliki data.');if(!confirm('Muat versi cloud terbaru? Perubahan lokal yang belum tersinkron perlu dibackup dahulu.'))return;db=remote.payload;cloudRevision=remote.revision;v2CloudBaseline=JSON.stringify(db);cloudConflict=false;localStorage.setItem(KEY,JSON.stringify(db));let b=document.getElementById('cloudReloadBtn');if(b)b.hidden=true;renderAll();setCloudFoot(true);setCloudStatus('Versi cloud terbaru dimuat.')}catch(e){setCloudStatus('Gagal memuat cloud: '+e.message)}}
 async function loadPicLinks(){let box=document.getElementById('picLinksList');if(!box)return;if(!cloudReady){box.innerHTML='<div class="muted">Login dan sinkronkan cloud untuk melihat tautan.</div>';return}box.textContent='Memuat tautan…';try{let r=await cloudApi('list_pic_links'),now=Date.now();box.innerHTML=r.links.length?r.links.map(function(l){let expired=new Date(l.expires_at).getTime()<now,active=!l.revoked_at&&!l.submitted_at&&!expired,status=l.revoked_at?'Dibatalkan':l.submitted_at?'Sudah digunakan':expired?'Kedaluwarsa':'Aktif',title=(l.payload?.project||'')+' · '+(l.payload?.task||'Task'),count=(l.payload?.items||[]).length;return '<div class="project-row"><div class="row-top"><strong>'+esc(l.pic_name)+' · '+esc(status)+'</strong><span class="muted">'+count+' sub-task</span></div><div>'+esc(title)+'</div><small class="muted">Berlaku sampai '+new Date(l.expires_at).toLocaleString('id-ID')+(l.submitted_at?' · Dikirim '+new Date(l.submitted_at).toLocaleString('id-ID'):'')+'</small>'+(active?'<div style="margin-top:8px"><button class="btn-danger mini" onclick="revokePicLink(\''+esc(l.id)+'\')">Batalkan tautan</button></div>':'')+'</div>'}).join(''):'<div class="muted">Belum ada tautan PIC.</div>'}catch(e){box.textContent='Tidak dapat memuat tautan: '+e.message}}
 async function revokePicLink(id){if(!confirm('Batalkan tautan ini? PIC tidak bisa lagi membuka atau mengirim update lewat tautan tersebut.'))return;try{await cloudApi('revoke_pic_link',{linkId:id});toast('Tautan PIC dibatalkan');await loadPicLinks()}catch(e){alert('Gagal membatalkan tautan: '+e.message)}}
 function cloudSignUp(){setCloudStatus('Pendaftaran umum dimatikan. Untuk akun admin khusus, buka Supabase Dashboard → Authentication → Users → Invite User. Setelah undangan diterima, kirim email akun kepada admin ProjectPulse agar role admin diaktifkan.')}
-async function cloudLogout(){cloudReady=false;cloudSession=null;cloudRevision=null;cloudConflict=false;await cloudClient.auth.signOut();setCloudFoot(false);setCloudStatus('Logout · perubahan baru hanya disimpan di browser ini.')}
-async function restoreCloudSession(){let x=await cloudClient.auth.getSession(),session=x.data.session;if(!session)return;cloudSession=session;try{let remote=await cloudApi('get_state');if(remote.payload){let local=load();if(JSON.stringify(local)!==JSON.stringify(remote.payload)&&!confirm('Data cloud berbeda dari data lokal browser ini. Muat cloud dan ganti tampilan lokal? Perubahan lokal yang belum tersinkron sebaiknya dibackup dahulu.')){setCloudFoot(false);setCloudStatus('Data berbeda · cloud tidak dimuat otomatis. Login ulang untuk memilih sumber data.');return}db=remote.payload;localStorage.setItem(KEY,JSON.stringify(db));cloudRevision=remote.revision;cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · cloud disinkronkan.')}}catch(e){cloudReady=false;setCloudFoot(false);setCloudStatus(e.message+' · pastikan akun memiliki peran admin ProjectPulse.')}}
+async function cloudLogout(){cloudReady=false;cloudSession=null;cloudRevision=null;cloudConflict=false;await cloudClient.auth.signOut();if(document.body.classList.contains('v2-restricted')){location.reload();return}setCloudFoot(false);setCloudStatus('Logout · perubahan baru hanya disimpan di browser ini.')}
+async function restoreCloudSession(){let x=await cloudClient.auth.getSession(),session=x.data.session;if(!session)return;cloudSession=session;try{if(await openRestrictedWorkflow())return;let remote=await cloudApi('get_state');if(remote.payload){let local=load();if(JSON.stringify(local)!==JSON.stringify(remote.payload)&&!confirm('Data cloud berbeda dari data lokal browser ini. Muat cloud dan ganti tampilan lokal? Perubahan lokal yang belum tersinkron sebaiknya dibackup dahulu.')){setCloudFoot(false);setCloudStatus('Data berbeda · cloud tidak dimuat otomatis. Login ulang untuk memilih sumber data.');return}db=remote.payload;localStorage.setItem(KEY,JSON.stringify(db));cloudRevision=remote.revision;v2CloudBaseline=JSON.stringify(db);cloudConflict=false;cloudReady=true;setCloudFoot(true);renderAll();setCloudStatus('Terhubung · cloud disinkronkan.')}}catch(e){cloudReady=false;setCloudFoot(false);setCloudStatus(e.message+' · pastikan akun memiliki peran admin ProjectPulse.')}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function today(){return new Date().toISOString().slice(0,10)}
 function fmt(d){if(!d)return '—';let x=new Date(d+'T00:00:00');return x.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}
@@ -533,7 +553,7 @@ function projectProgress(p){let a=allSubs(p.id);if(a.length)return Math.round(a.
 function projectStatus(p){let a=allSubs(p.id);if(a.length&&a.every(s=>subProgress(s)>=100))return'Selesai';if(a.some(late))return'Terlambat';if(a.some(s=>subProgress(s)>0))return'Berjalan';return'Belum dimulai'}
 function projectName(id){return db.projects.find(p=>p.id===id)?.name||'Proyek dihapus'}
 function taskOf(id){return db.tasks.find(t=>t.id===id)}
-function go(tab){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(tab).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));let titles={dashboard:'Dashboard',agent:'Asisten Pengawas',projects:'Daftar Proyek',tasks:'Tugas & Subtugas',wbs:'WBS per Proyek',gantt:'Timeline Aktivitas',reports:'Laporan',settings:'Pengaturan'};document.getElementById('pageTitle').textContent=titles[tab];renderAll()}
+function go(tab){document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById(tab).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===tab));let titles={dashboard:'Dashboard',workflow:'Alur Engineering & Workshop',agent:'Asisten Pengawas',projects:'Daftar Proyek',tasks:'Tugas & Subtugas',wbs:'WBS per Proyek',gantt:'Timeline Aktivitas',reports:'Laporan',settings:'Pengaturan'};document.getElementById('pageTitle').textContent=titles[tab];renderAll();if(tab==='workflow')loadWorkflow()}
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
 document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 function collectAgentSignals(){let out=[],nets={};db.projects.forEach(function(p){nets[p.id]=network(p)});db.subs.forEach(function(s){let progress=subProgress(s);if(progress>=100)return;let reasons=[],t=taskOf(s.taskId),p=t&&db.projects.find(function(x){return x.id===t.projectId}),net=p&&nets[p.id],blockers=(s.dependsOn||[]).map(function(id){return db.subs.find(function(x){return x.id===id})}).filter(function(x){return x&&subProgress(x)<100}),last=subLastUpdate(s),age=last?dd(last,today()):null,dueDays=s.due?dd(today(),s.due):null,isLate=late(s),isStale=progress<100&&(age!==null?age>=2:!!(s.planStart&&s.planStart<today())),isNear=dueDays!==null&&dueDays>=0&&dueDays<=7,critical=!!(net&&net.links&&net.critical.includes(s.id));if(isLate)reasons.push('Terlambat '+dd(s.due,today())+' hari');if(blockers.length)reasons.push('Terhambat pekerjaan pendahulu');if(isStale)reasons.push(age===null?'Belum ada riwayat pembaruan':'Belum diperbarui selama '+age+' hari');if(isNear)reasons.push('Target ≤'+dueDays+' hari');if(critical)reasons.push('Jalur kritis');if(!s.pic)reasons.push('PIC belum ditetapkan');if(!reasons.length)return;let score=blockers.length?0:isLate?1:critical?2:isStale?3:isNear?4:5;out.push({s:s,t:t,p:p,pic:(s.recoveryOwner||s.pic||'').trim(),progress:progress,age:age,late:isLate,stale:isStale,blocked:blockers.length>0,critical:critical,near:isNear,blockers:blockers,reasons:reasons,score:score})});return out.sort(function(a,b){return a.score-b.score||(b.age||0)-(a.age||0)})}
@@ -559,8 +579,8 @@ function fillSelects(){let opts=db.projects.map(p=>`<option value="${p.id}">${es
   reportPic.replaceChildren(new Option('Pilih PIC',''), ...picHistoryNames().map(name=>new Option(name,name)));
   reportPic.value=old;
 }
-function showWhatsNew(){openModal('whatsNewModal');try{localStorage.setItem('projectpulse_whats_new_seen_20261122','1')}catch(e){}}
-function showWhatsNewOnce(){if(location.hash.startsWith('#piccloud=')||location.hash.startsWith('#picupdate='))return;try{if(localStorage.getItem('projectpulse_whats_new_seen_20261122'))return}catch(e){}setTimeout(function(){showWhatsNew()},650)}
+function showWhatsNew(){openModal('whatsNewModal');try{localStorage.setItem('projectpulse_whats_new_seen_v2','1')}catch(e){}}
+function showWhatsNewOnce(){if(location.hash.startsWith('#piccloud=')||location.hash.startsWith('#picupdate='))return;try{if(localStorage.getItem('projectpulse_whats_new_seen_v2'))return}catch(e){}setTimeout(function(){if(!document.body.classList.contains('v2-restricted'))showWhatsNew()},650)}
 function openModal(id){document.getElementById(id).classList.add('show')}function closeModal(id){document.getElementById(id).classList.remove('show')}
 function openProject(id){projectForm.reset();setPicValue(pPic);pId.value='';projectModalTitle.textContent=id?'Edit Proyek':'Tambah Proyek';let p=db.projects.find(x=>x.id===id);if(p){pId.value=p.id;pName.value=p.name;pCode.value=p.code||'';setPicValue(pPic,p.pic||'');pStart.value=p.start||'';pEnd.value=p.end||'';pReceivedDate.value=p.receivedDate||'';pPromisedReturn.value=p.promisedReturn||p.end||'';pStage.value=p.stage||'Penerimaan / intake';pReturnedDate.value=p.returnedDate||'';pHoldReason.value=p.holdReason||'';pPriority.value=normalizePriority(p.priority||'Sedang');pCustomer.value=p.customer||'';pDesc.value=p.desc||''}else{pStart.value=today();pStage.value='Penerimaan / intake'}openModal('projectModal')}
 projectForm.onsubmit=e=>{e.preventDefault();if(pStage.value==='Dikirim / kembali ke customer'&&!pReturnedDate.value){alert('Isi tanggal kembali aktual sebelum menutup Work Order.');return}let id=pId.value,prior=db.projects.find(x=>x.id===id)||{},p={...prior,id:id||uid(),name:pName.value.trim(),code:pCode.value,pic:pPic.value,start:pStart.value,end:pEnd.value,receivedDate:pReceivedDate.value,promisedReturn:pPromisedReturn.value||pEnd.value,stage:pStage.value,returnedDate:pReturnedDate.value,holdReason:pHoldReason.value.trim(),stageUpdatedAt:prior.stage===pStage.value?(prior.stageUpdatedAt||today()):today(),priority:pPriority.value,customer:pCustomer.value,desc:pDesc.value};if(id){db.projects=db.projects.map(x=>x.id===id?p:x);log('Work Order diperbarui: '+p.name+' · '+p.stage)}else{db.projects.push(p);log('Work Order baru: '+p.name+' · '+p.stage)}closeModal('projectModal');save();toast('Work Order tersimpan')};
@@ -733,7 +753,137 @@ async function handleChatgptApproval(operation) {
 chatgptReviewButton.onclick = () => handleChatgptApproval('review');
 chatgptApplyButton.onclick = () => handleChatgptApproval('apply');
 window.addEventListener('hashchange', openChatgptApproval);
-reportDate.value=today();renderAll();restoreCloudSession();
+
+let v2State=null;
+let v2CloudBaseline=null;
+let v2Busy=false;
+const v2RoleNames={admin:'PIC A · Admin Project',pic_a:'PIC A · Admin Project',pic_b:'PIC B · MRE',pic_c:'PIC C · Project Control',pm:'Project Manager'};
+const v2States={draft:'Draf MO',issued:'Menunggu PIC C',returned:'Dikembalikan ke MRE',accepted:'Diterima PIC C'};
+const v2WorkshopExample='Cutting\nStraightening awal\nTurning\nSlotting\nStraightening akhir\nQC check';
+const v2Status=message=>{document.getElementById('v2Status').textContent=message;};
+const v2Can=role=>v2State?.role==='admin'||v2State?.role===role;
+async function openRestrictedWorkflow(){
+  const access=await cloudApi('v2_role');
+  if(access.role==='admin')return false;
+  cloudReady=false;
+  document.body.classList.add('v2-restricted');
+  closeModal('whatsNewModal');
+  go('workflow');
+  return true;
+}
+async function loadWorkflow(){
+  if(v2Busy)return;
+  const select=document.getElementById('v2Project');
+  const content=document.getElementById('v2Content');
+  if(!cloudSession){
+    select.replaceChildren(new Option('Login terlebih dahulu',''));
+    content.innerHTML='<button class="btn-primary" onclick="go(\'settings\')">Buka Pengaturan untuk login</button>';
+    v2Status('');
+    return;
+  }
+  v2Status('Memuat data cloud…');
+  try{
+    v2State=await cloudApi('v2_read');
+    const selected=select.value;
+    select.replaceChildren(...v2State.projects.map(project=>new Option([project.code,project.name].filter(Boolean).join(' · '),project.id)));
+    if(v2State.projects.some(project=>project.id===selected))select.value=selected;
+    document.getElementById('v2RoleTitle').textContent=v2RoleNames[v2State.role];
+    document.getElementById('v2RoleHelp').textContent=v2State.role==='admin'?'Pantau seluruh tahapan dan kelola serah terima antarperan.':'Tampilan dan tindakan mengikuti peran akun ProjectPulse.';
+    renderWorkflow();
+    v2Status('');
+  }catch(error){v2Status('Gagal memuat alur: '+error.message);}
+}
+function renderWorkflow(){
+  const content=document.getElementById('v2Content');
+  const project=v2State?.projects.find(item=>item.id===document.getElementById('v2Project').value);
+  if(!project){content.textContent='Belum ada Work Order yang tersedia untuk akun ini.';return;}
+  if(!project.active){
+    const available=!project.returnedDate;
+    content.innerHTML='<p class="muted">'+(available?'Aktifkan untuk mulai mencatat progres V2. Progres lama tetap tersedia di menu Tugas dan WBS.':'Work Order ini sudah memiliki tanggal pengiriman aktual.')+'</p>'
+      +(available&&v2Can('pm')?'<button class="btn-primary" data-v2="activate">Aktifkan V2</button>':'');
+    return;
+  }
+  const open=!project.closedAt;
+  const formatTime=value=>new Date(value).toLocaleString('id-ID',{timeZone:'Asia/Jakarta'})+' WIB';
+  const block=(title,list,group,order,unlocked,role)=>{
+    if(!list?.length)return '';
+    const next=list.findIndex(item=>!item.done);
+    return '<h4 style="margin:12px 0 6px">'+title+'</h4>'+list.map((step,index)=>{
+      const button=open&&unlocked&&v2Can(role)&&index===next
+        ?'<button class="btn-soft mini" data-v2="step" data-group="'+group+'" data-order="'+esc(order||'')+'" data-step="'+esc(step.id)+'">Tandai selesai</button>':'';
+      return '<div class="v2-step"><span>'+esc(step.label)+(step.done?' <b class="v2-check">· Selesai</b>':'')+'</span>'+button+'</div>';
+    }).join('');
+  };
+  const kpis=[['Total',project.progress.total],['Persiapan · 15%',project.progress.preparation],['Engineering · 30%',project.progress.engineering],['Workshop · 45%',project.progress.workshop],['Akhir & pengiriman · 10%',project.progress.delivery]];
+  const ready=project.orders.length>0&&project.orders.every(order=>order.state==='accepted'&&order.workshopReady);
+  const pending=project.orders.filter(order=>order.state==='issued');
+  const overdue=pending.filter(order=>Date.parse(order.dueAt)<Date.now()).length;
+  const adminNext=project.admin.findIndex(step=>!step.done);
+  content.innerHTML='<div class="v2-kpis">'+kpis.map(([label,value])=>'<div><span>'+label+'</span><strong>'+value+'%</strong></div>').join('')+'</div>'
+    +'<p class="muted">'+project.orders.length+' MO · '+pending.length+' menunggu respons · '+overdue+' melewati target 24 jam</p>'
+    +(open?'':'<p class="pill s-selesai">Ditutup · Pengiriman aktual '+esc(project.returnedDate)+'</p>')
+    +block('PIC A · Persiapan dan pengiriman',project.admin,'admin','',adminNext<2||ready,'pic_a')
+    +(open&&v2Can('pic_b')&&!project.admin.slice(2).some(step=>step.done)?'<details><summary>Tambah komponen / MO</summary><form data-v2="add_order"><div class="field"><label>Nama komponen<input name="name" maxlength="100" required></label></div><div class="field"><label>Urutan langkah workshop (satu per baris)<textarea name="workshop" maxlength="2430">'+esc(v2WorkshopExample)+'</textarea></label></div><button class="btn-primary">Tambah komponen</button></form></details>':'')
+    +project.orders.map(order=>{
+      const orderId=esc(order.id);
+      let actions='';
+      if(open&&v2Can('pic_b')&&['draft','returned'].includes(order.state)&&order.engineering.every(step=>step.done)){
+        actions='<form data-v2="issue" data-order="'+orderId+'"><div class="field"><label>Nomor Manufacturing Order<input name="moNumber" maxlength="80" required value="'+esc(order.moNumber)+'"></label></div><button class="btn-primary">Serahkan ke PIC C</button></form>';
+      }
+      if(open&&v2Can('pic_c')&&order.state==='issued'){
+        actions='<div class="actions"><button class="btn-primary" data-v2="accept" data-order="'+orderId+'">Terima MO</button></div><details><summary>Kembalikan ke MRE</summary><form data-v2="return" data-order="'+orderId+'"><div class="field"><label>Alasan pengembalian<textarea name="note" maxlength="500" required></textarea></label></div><button class="btn-danger">Kembalikan MO</button></form></details>';
+      }
+      return '<article class="v2-order"><h4>'+esc(order.name)+(order.moNumber?' · '+esc(order.moNumber):'')+'</h4>'
+        +'<p class="muted">'+esc(v2States[order.state]||order.state)+(order.state==='issued'?' · Target respons '+esc(formatTime(order.dueAt))+(Date.parse(order.dueAt)<Date.now()?' · Terlambat':''):'')+'</p>'
+        +(order.responseNote?'<p>Catatan serah terima: '+esc(order.responseNote)+'</p>':'')
+        +block('PIC B · Engineering',order.engineering,'engineering',order.id,['draft','returned'].includes(order.state),'pic_b')
+        +block('PIC C · Workshop',order.workshop,'workshop',order.id,order.state==='accepted','pic_c')
+        +actions+'</article>';
+    }).join('')
+    +(open&&v2Can('pm')?(ready&&project.admin.every(step=>step.done)?'<form data-v2="close"><div class="field"><label>Tanggal pengiriman aktual<input name="returnedDate" type="date" required value="'+esc(project.returnedDate||'')+'"></label></div><button class="btn-primary">Tutup proyek</button></form>':'<p class="muted">Penutupan tersedia setelah seluruh langkah workshop, final inspection, dan packing list selesai.</p>'):'')
+    +(project.events.length?'<details><summary>Aktivitas alur terbaru</summary>'+project.events.map(event=>'<div class="project-row"><strong>'+esc(event.action)+'</strong><br><small class="muted">'+esc(v2RoleNames[event.role]||event.role)+' · '+esc(formatTime(event.at))+'</small>'+(event.note?'<div>'+esc(event.note)+'</div>':'')+'</div>').join('')+'</details>':'');
+}
+async function changeWorkflow(control,fields={}){
+  if(v2Busy||!v2State)return;
+  v2Busy=true;
+  const projectId=document.getElementById('v2Project').value;
+  v2Status('Menyimpan ke cloud…');
+  try{
+    const out=await cloudApi('v2_change',{
+      ...fields,command:control.dataset.v2,group:control.dataset.group,orderId:control.dataset.order,
+      stepId:control.dataset.step,projectId,expectedRevision:v2State.revision
+    });
+    v2State.revision=out.revision;
+    v2State.projects=v2State.projects.map(project=>project.id===projectId?out.project:project);
+    renderWorkflow();
+    v2Status('Perubahan tersimpan.');
+    if(v2State.role==='admin'&&cloudReady&&JSON.stringify(db)===v2CloudBaseline){
+      try{
+        const remote=await cloudApi('get_state');
+        if(remote.payload&&JSON.stringify(db)===v2CloudBaseline){
+          db=remote.payload;
+          v2CloudBaseline=JSON.stringify(db);
+          localStorage.setItem(KEY,v2CloudBaseline);
+          cloudRevision=remote.revision;
+          renderAll();
+        }
+      }catch(error){v2Status('Perubahan tersimpan. Muat ulang cloud untuk memperbarui tampilan utama.');}
+    }
+  }catch(error){v2Status(error.message);}
+  finally{v2Busy=false;}
+}
+document.getElementById('v2Content').addEventListener('click',event=>{
+  const button=event.target.closest('button[data-v2]');
+  if(button)changeWorkflow(button);
+});
+document.getElementById('v2Content').addEventListener('submit',event=>{
+  const form=event.target.closest('form[data-v2]');
+  if(!form)return;
+  event.preventDefault();
+  changeWorkflow(form,Object.fromEntries(new FormData(form)));
+});
+
+reportDate.value=today();renderAll();if(!location.hash.startsWith('#piccloud=')&&!location.hash.startsWith('#picupdate='))restoreCloudSession();
 if(location.hash.startsWith('#piccloud='))showCloudPicPortal(location.hash.slice('#piccloud='.length));
 else if(location.hash.startsWith('#picupdate='))showPicPortal();
 else if(chatgptToken())openChatgptApproval();
