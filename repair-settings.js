@@ -17,6 +17,7 @@ function formatDeviceTime(value){
 function renderDeviceStatus(){
   const meta=deviceMeta(), deviceOnline=navigator.onLine;
   const badge=document.getElementById('headerSync');
+  if(!badge)return;
   const pending=!!meta.pending;
   const connection=!deviceOnline?'Offline':cloudReady?'Online · Cloud terhubung':'Online · Cloud belum terhubung';
   document.getElementById('headerSyncConnection').textContent=connection;
