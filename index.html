@@ -164,7 +164,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
   <button class="active" data-tab="dashboard" title="NEW · Dashboard progres per proyek dan per kelompok."><span>▦</span> Dashboard <span class="update-new-badge">NEW</span></button>
 
   <button data-tab="projects" title="NEW · Tahap Work Order otomatis dan progres tiga kelompok."><span>◫</span> Proyek <span class="update-new-badge">NEW</span></button>
-  <button data-tab="tasks" title="NEW · Urutkan tugas dan lihat sub-subtask WBS langsung di sini."><span>☷</span> Tugas & Subtugas <span class="update-new-badge">NEW</span></button>
+  <button data-tab="tasks" title="NEW · Perbarui status, PIC otomatis, dan format judul."><span>☷</span> Tugas & Subtugas <span class="update-new-badge">NEW</span></button>
   <button data-tab="wbs" title="NEW · Urutkan proses produksi dengan tarik dan lepas."><span>▤</span> WBS per Proyek <span class="update-new-badge">NEW</span></button>
   <button data-tab="gantt"><span>▥</span> Gantt Chart</button>
   <button data-tab="reports"><span>▤</span> Laporan</button>
@@ -316,7 +316,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
 </main>
 </div>
 
-<div class="modal" id="whatsNewModal" role="dialog" aria-modal="true" aria-labelledby="whatsNewTitle"><div class="modal-box"><div class="modal-head"><div><div class="whats-new-date">Pembaruan terbaru · Alur Work Order</div><h2 id="whatsNewTitle">Apa yang Baru di Repair Monitor?</h2></div><button class="btn-plain" onclick="closeModal('whatsNewModal')" aria-label="Tutup">✕</button></div><p class="muted">Tahap Work Order mengikuti progres pekerjaan. Tugas dan proses WBS bisa diurutkan langsung.</p><div class="whats-new-list"><article class="whats-new-item"><h3>Sub-subtask dan WBS terhubung</h3><p>Proses yang dibuat di WBS langsung tampil di Tugas &amp; Subtugas. Atur urutannya dengan tarik dan lepas atau tombol naik dan turun.</p></article><article class="whats-new-item"><h3>Progres tiap proyek</h3><p>Lihat kemajuan Admin Engineering, Engineering, dan Workshop pada kartu proyek.</p></article><article class="whats-new-item"><h3>Follow-up PIC</h3><p>Gunakan tautan PIC untuk dokumen dan proses WBS. PIC PC menerima pekerjaan produksi di luar Drawing dan BOM Release.</p></article><details><summary>Pembaruan sebelumnya</summary><article class="whats-new-item"><h3>Daftar PIC dinamis</h3><p>Tambah, nonaktifkan, atau aktifkan kembali PIC lewat Pengaturan.</p></article><article class="whats-new-item"><h3>KPI pengiriman dan TAT</h3><p>Lihat persentase tepat waktu dan rata-rata hari pengerjaan di Dashboard.</p></article><article class="whats-new-item"><h3>Riwayat perubahan cloud</h3><p>Lihat siapa, kapan, serta nilai sebelum dan sesudah perubahan di Pengaturan.</p></article><details><summary>Pembaruan 21 November</summary><article class="whats-new-item"><h3>Sinkronisasi cloud lebih aman</h3><p>Jika data cloud berubah lebih dulu, sistem menahan simpanan yang berpotensi menimpa perubahan tersebut dan menampilkan tombol <b>Muat Cloud Terbaru</b>.</p></article><article class="whats-new-item"><h3>Predecessor diperiksa di backend</h3><p>Update PIC untuk proses berikutnya ditolak server selama pekerjaan pendahulu belum selesai.</p></article><article class="whats-new-item"><h3>Kelola tautan PIC</h3><p>Di Pengaturan, lihat status tautan, batalkan tautan aktif, lalu buat tautan pengganti dari task bila diperlukan. Tautan berlaku 14 hari dan hanya bisa mengirim satu update.</p></article></details></details></div><div class="modal-actions"><button class="btn-primary" onclick="closeModal('whatsNewModal')">Mengerti</button></div></div></div>
+<div class="modal" id="whatsNewModal" role="dialog" aria-modal="true" aria-labelledby="whatsNewTitle"><div class="modal-box"><div class="modal-head"><div><div class="whats-new-date">Pembaruan terbaru · Alur Work Order</div><h2 id="whatsNewTitle">Apa yang Baru di Repair Monitor?</h2></div><button class="btn-plain" onclick="closeModal('whatsNewModal')" aria-label="Tutup">✕</button></div><p class="muted">PIC utama mengisi penugasan yang terkait. Tombol Perbarui tersedia untuk setiap subtugas, dan Dashboard menghitung kembali kelompok pekerjaan.</p><div class="whats-new-list"><article class="whats-new-item"><h3>Sub-subtask dan WBS terhubung</h3><p>Proses yang dibuat di WBS langsung tampil di Tugas &amp; Subtugas. Atur urutannya dengan tarik dan lepas atau tombol naik dan turun.</p></article><article class="whats-new-item"><h3>Progres tiap proyek</h3><p>Lihat kemajuan Admin Engineering, Engineering, dan Workshop pada kartu proyek.</p></article><article class="whats-new-item"><h3>Follow-up PIC</h3><p>Gunakan tautan PIC untuk dokumen dan proses WBS. PIC PC menerima pekerjaan produksi di luar Drawing dan BOM Release.</p></article><details><summary>Pembaruan sebelumnya</summary><article class="whats-new-item"><h3>Daftar PIC dinamis</h3><p>Tambah, nonaktifkan, atau aktifkan kembali PIC lewat Pengaturan.</p></article><article class="whats-new-item"><h3>KPI pengiriman dan TAT</h3><p>Lihat persentase tepat waktu dan rata-rata hari pengerjaan di Dashboard.</p></article><article class="whats-new-item"><h3>Riwayat perubahan cloud</h3><p>Lihat siapa, kapan, serta nilai sebelum dan sesudah perubahan di Pengaturan.</p></article><details><summary>Pembaruan 21 November</summary><article class="whats-new-item"><h3>Sinkronisasi cloud lebih aman</h3><p>Jika data cloud berubah lebih dulu, sistem menahan simpanan yang berpotensi menimpa perubahan tersebut dan menampilkan tombol <b>Muat Cloud Terbaru</b>.</p></article><article class="whats-new-item"><h3>Predecessor diperiksa di backend</h3><p>Update PIC untuk proses berikutnya ditolak server selama pekerjaan pendahulu belum selesai.</p></article><article class="whats-new-item"><h3>Kelola tautan PIC</h3><p>Di Pengaturan, lihat status tautan, batalkan tautan aktif, lalu buat tautan pengganti dari task bila diperlukan. Tautan berlaku 14 hari dan hanya bisa mengirim satu update.</p></article></details></details></div><div class="modal-actions"><button class="btn-primary" onclick="closeModal('whatsNewModal')">Mengerti</button></div></div></div>
 <div class="modal" id="projectModal"><div class="modal-box"><div class="modal-head"><h2 id="projectModalTitle">Tambah Proyek</h2><button class="btn-plain" onclick="closeModal('projectModal')">✕</button></div><form id="projectForm"><input type="hidden" id="pId"><div class="form-grid">
  <div class="field span2"><label>Nama proyek *</label><input id="pName" required placeholder="Contoh: Overhaul Pump P-101"></div>
  <div class="field"><label>Nomor SO / Job No.</label><input id="pCode" placeholder="SO / WO"></div><div class="field"><label>PIC utama</label><select id="pPic" class="pic-select"><option value="">Pilih PIC</option></select></div>
@@ -344,7 +344,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Work Sans',Arial,sans-se
  </div><div class="modal-actions"><button type="button" class="btn-plain" onclick="closeModal('subModal')">Batal</button><button class="btn-primary">Simpan Subtugas</button></div></form></div></div>
 <div class="modal" id="wbsPickerModal"><div class="modal-box" style="max-width:900px"><div class="modal-head"><h2>Pilih Proses Produksi</h2><button class="btn-plain" onclick="closeModal('wbsPickerModal')">✕</button></div><input type="hidden" id="wbsPickerSubId"><div class="toolbar"><input id="wbsProcessSearch" placeholder="Cari proses produksi..." oninput="renderWbsPicker()" style="flex:1"><select id="wbsSavedTemplateSelect" onchange="loadWbsSavedTemplate()"><option value="">Pilih template tersimpan...</option></select></div><div id="wbsPickerList" style="max-height:42vh;overflow:auto;margin:12px 0"></div><div class="field"><label>Nama template produksi untuk disimpan</label><div class="actions"><input id="wbsSaveTemplateName" placeholder="Contoh: Standard Repair Pump / Overhaul Motor" style="flex:1"><button class="btn-soft" type="button" onclick="saveWbsNamedTemplate()">Simpan Template</button></div></div><div class="modal-actions"><button class="btn-plain" onclick="openWbsLibraryManager()">Kelola Master Proses</button><button class="btn-plain" onclick="closeModal('wbsPickerModal')">Batal</button><button class="btn-primary" onclick="applyWbsPickerSelection()">Tambahkan ke Sub-task</button></div></div></div>
 <div class="modal" id="wbsTemplateModal"><div class="modal-box" style="max-width:900px"><div class="modal-head"><h2>Master Proses Produksi & Template</h2><button class="btn-plain" onclick="closeModal('wbsTemplateModal')">✕</button></div><p class="muted">Cari, tambah, rename, atau hapus proses di master library. Template bernama disimpan terpisah dan dapat dipakai kembali pada sub-task lain.</p><div class="field"><label>Tambah proses baru ke master</label><div class="actions"><input id="wbsLibraryNewName" placeholder="Nama proses produksi..." style="flex:1"><button class="btn-primary" type="button" onclick="addWbsLibraryProcess()">＋ Tambah Proses</button></div></div><input id="wbsLibrarySearch" placeholder="Cari master proses..." oninput="renderWbsLibraryManager()" style="width:100%;margin-top:12px"><div id="wbsLibraryList" style="max-height:34vh;overflow:auto;margin-top:10px"></div><hr style="margin:18px 0;border:0;border-top:1px solid var(--line)"><h3>Template produksi tersimpan</h3><div id="wbsNamedTemplateList"></div><div class="modal-actions"><button class="btn-primary" onclick="closeModal('wbsTemplateModal')">Selesai</button></div></div></div>
-<div class="modal" id="wbsModal"><div class="modal-box"><div class="modal-head"><h2 id="wbsModalTitle">Tambah Proses Produksi</h2><button class="btn-plain" onclick="closeModal('wbsModal')">✕</button></div><form id="wbsForm"><input type="hidden" id="wbsSubId"><input type="hidden" id="wbsTaskId"><input type="hidden" id="wbsProcessId"><p class="muted">Progres dan catatan diisi melalui tautan PIC proses.</p><div class="form-grid">
+<div class="modal" id="wbsModal"><div class="modal-box"><div class="modal-head"><h2 id="wbsModalTitle">Tambah Proses Produksi</h2><button class="btn-plain" onclick="closeModal('wbsModal')">✕</button></div><form id="wbsForm"><input type="hidden" id="wbsSubId"><input type="hidden" id="wbsTaskId"><input type="hidden" id="wbsProcessId"><p class="muted">Admin dapat memperbarui progres di sini. Gunakan tautan PIC untuk meminta pembaruan dari tim.</p><div class="form-grid">
  <div class="field span2"><label>Nama proses *</label><input id="wbsName" required placeholder="Contoh: Machining / Assembly"></div>
  <div class="field"><label>PIC</label><select id="wbsPic" class="pic-select"><option value="">Pilih PIC</option></select></div>
  <div class="field"><label>Status</label><select id="wbsStatus"><option>Belum dikerjakan</option><option>Sedang dikerjakan</option><option>Selesai</option></select></div>
@@ -608,18 +608,18 @@ function renderDashboard(){
 }
 function renderProjects(){const workflowGroups=woSummaries(db);let q=(projectSearch?.value||'').toLowerCase(),f=projectFilter?.value||'';let ps=db.projects.filter(p=>(p.name+' '+(p.pic||'')+' '+(p.code||'')).toLowerCase().includes(q)&&(!f||projectStatus(p)===f));projectList.innerHTML=ps.length?ps.map(p=>`<div class="project-card"><div class="project-card-top"><div><h3>${esc(p.name)}</h3><div class="muted" style="font-size:11px">${esc(p.code||'Tanpa nomor SO')} · ${esc(p.customer||'Lokasi belum diisi')}</div></div><span class="pill ${projectStatus(p)==='Selesai'?'s-selesai':projectStatus(p)==='Terlambat'?'s-terlambat':'s-proses'}">${projectStatus(p)}</span></div><div class="meta"><span>👤 ${esc(p.pic||'PIC belum diisi')}</span><span>Tahap: ${esc(p.stage||"Belum ditentukan")}</span><span>TAT: ${p.receivedDate?dd(p.receivedDate,p.returnedDate||today())+" hari":"tanggal terima belum diisi"}</span><span>Target kembali: ${fmt(p.promisedReturn||p.end)}</span><span>Prioritas: ${esc(normalizePriority(p.priority))}</span></div>${renderProjectTeams(workflowGroups.get(p.id)||[])}<div class="row-top"><strong>Progress proyek</strong><strong>${projectProgress(p)}%</strong></div><div class="progress-track"><div class="progress-fill" style="width:${projectProgress(p)}%"></div></div><div class="actions" style="margin-top:13px"><button class="btn-soft mini" onclick="openTask('${p.id}')">＋ Task</button><button class="btn-plain mini" onclick="openProject('${p.id}')">Edit</button><button class="btn-plain mini" onclick="goProjectTasks('${p.id}')">Lihat task</button><button class="btn-danger mini" onclick="deleteProject('${p.id}')">Hapus</button></div></div>`).join(''):'<div class="card empty">Belum ada proyek yang cocok.</div>'}
 function goProjectTasks(id){go('tasks');taskProjectFilter.value=id;renderTasks()}
-function renderTasks(){let pf=taskProjectFilter?.value||'',sf=taskStatusFilter?.value||'';let tasks=db.tasks.filter(t=>(!pf||t.projectId===pf)&&(!sf||db.subs.some(s=>s.taskId===t.id&&woDisplayStatus(s)===sf)));taskList.innerHTML=tasks.length?tasks.map(t=>{let ss=db.subs.filter(s=>s.taskId===t.id),pr=woTaskProgress(t,ss);return `<div class="card" ${woOrderAttributes('task',t.projectId,t.id)} style="margin-bottom:13px"><div class="card-head wo-task-head"><div><h3>${esc(t.name)}</h3><div class="muted" style="font-size:11px">${esc(projectName(t.projectId))} · PIC: ${esc(t.pic||'—')} · ${fmt(t.start)} – ${fmt(t.end)}</div></div><div class="actions">${woOrderButtons(t.name)}<span class="pill s-proses">${pr}%</span><button class="btn-soft mini" onclick="makePicBulkLink('${t.id}')">Tautan PIC Massal</button><button class="btn-plain mini" onclick="renameTask('${t.id}')">Ubah Nama</button><button class="btn-plain mini" onclick="openTask(null,'${t.id}')">Edit</button><button class="btn-soft mini" onclick="duplicateTask('${t.id}')">Duplikat</button><button class="btn-danger mini" onclick="deleteTask('${t.id}')">Hapus</button></div></div><div class="progress-track"><div class="progress-fill" style="width:${pr}%"></div></div><div class="task-body">${t.wbs?.length?renderNestedWbs(t,null):''}${ss.length?ss.map(s=>`<div class="subtask"><div class="subname">${esc(s.name)}<small>${esc(s.note||'')}</small></div><div><span class="pill ${statusClass(woDisplayStatus(s))}">${woDisplayStatus(s)}</span><strong style="color:var(--blue)">${subProgress(s)}%</strong>${late(s)?'<span class="pill s-terlambat">Terlambat</span>':''}</div><div><small>PIC</small>${esc(woAssigned(s,'sub')||'—')}</div><div><small>Aktual</small>${fmt(s.actualStart)}${s.actualEnd?' → '+fmt(s.actualEnd):''}<small>Target: ${fmt(s.due)}</small></div><div class="actions">${woAllowed(s,'sub')||s.wbs?.length?'':`<button class="btn-soft mini" onclick="quickStatus('${s.id}')">Perbarui</button>`}<button class="btn-plain mini" onclick="openSubtask('${s.id}')">Edit</button><button class="btn-soft mini" onclick="makePicLink('${s.id}')">Tautan PIC</button><button class="btn-danger mini" onclick="deleteSubtask('${s.id}')">×</button></div></div>${renderNestedWbs(t,s)}`).join(''):'<div class="empty" style="padding:15px">Belum ada subtugas untuk tugas ini.</div>'}<button class="btn-soft mini" onclick="openSubtask(null,'${t.id}')">＋ Tambah subtugas</button></div></div>`}).join(''):'<div class="card empty">Belum ada tugas. Tambahkan tugas pada proyek terlebih dahulu.</div>'}
+function renderTasks(){let pf=taskProjectFilter?.value||'',sf=taskStatusFilter?.value||'';let tasks=db.tasks.filter(t=>(!pf||t.projectId===pf)&&(!sf||db.subs.some(s=>s.taskId===t.id&&woDisplayStatus(s)===sf)));taskList.innerHTML=tasks.length?tasks.map(t=>{let ss=db.subs.filter(s=>s.taskId===t.id),pr=woTaskProgress(t,ss);return `<div class="card" ${woOrderAttributes('task',t.projectId,t.id)} style="margin-bottom:13px"><div class="card-head wo-task-head"><div><h3>${esc(t.name)}</h3><div class="muted" style="font-size:11px">${esc(projectName(t.projectId))} · PIC: ${esc(t.pic||'—')} · ${fmt(t.start)} – ${fmt(t.end)}</div></div><div class="actions">${woOrderButtons(t.name)}<span class="pill s-proses">${pr}%</span><button class="btn-soft mini" onclick="makePicBulkLink('${t.id}')">Tautan PIC Massal</button><button class="btn-plain mini" onclick="renameTask('${t.id}')">Ubah Nama</button><button class="btn-plain mini" onclick="openTask(null,'${t.id}')">Edit</button><button class="btn-soft mini" onclick="duplicateTask('${t.id}')">Duplikat</button><button class="btn-danger mini" onclick="deleteTask('${t.id}')">Hapus</button></div></div><div class="progress-track"><div class="progress-fill" style="width:${pr}%"></div></div><div class="task-body">${t.wbs?.length?renderNestedWbs(t,null):''}${ss.length?ss.map(s=>`<div class="subtask"><div class="subname">${esc(s.name)}<small>${esc(s.note||'')}</small></div><div><span class="pill ${statusClass(woDisplayStatus(s))}">${woDisplayStatus(s)}</span><strong style="color:var(--blue)">${subProgress(s)}%</strong>${late(s)?'<span class="pill s-terlambat">Terlambat</span>':''}</div><div><small>PIC</small>${esc(woAssigned(s,'sub',t)||'—')}</div><div><small>Aktual</small>${fmt(s.actualStart)}${s.actualEnd?' → '+fmt(s.actualEnd):''}<small>Target: ${fmt(s.due)}</small></div><div class="actions"><button class="btn-soft mini" onclick="openSubtask('${s.id}')">Perbarui</button><button class="btn-plain mini" onclick="openSubtask('${s.id}')">Edit</button><button class="btn-soft mini" onclick="makePicLink('${s.id}')">Tautan PIC</button><button class="btn-danger mini" onclick="deleteSubtask('${s.id}')">×</button></div></div>${renderNestedWbs(t,s)}`).join(''):'<div class="empty" style="padding:15px">Belum ada subtugas untuk tugas ini.</div>'}<button class="btn-soft mini" onclick="openSubtask(null,'${t.id}')">＋ Tambah subtugas</button></div></div>`}).join(''):'<div class="card empty">Belum ada tugas. Tambahkan tugas pada proyek terlebih dahulu.</div>'}
 function fillSelects(){let opts=db.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join('');let keep=taskProjectFilter?.value||'';taskProjectFilter.innerHTML='<option value="">Semua proyek</option>'+opts;taskProjectFilter.value=keep;let keepP=reportProject?.value||'';reportProject.innerHTML='<option value="">Semua proyek</option>'+opts;reportProject.value=keepP;let keepG=ganttProject?.value||'';ganttProject.innerHTML='<option value="">Semua proyek</option>'+opts;ganttProject.value=keepG;tProject.innerHTML=opts||'<option value="">Buat proyek dahulu</option>';let taskOpts=db.tasks.map(t=>`<option value="${t.id}">${esc(projectName(t.projectId))} — ${esc(t.name)}</option>`).join('');let keepT=sTask?.value||'';sTask.innerHTML=taskOpts;sTask.value=keepT;let old=reportPic.value;
   reportPic.replaceChildren(new Option('Pilih PIC',''), ...picHistoryNames().map(name=>new Option(name,name)));
   reportPic.value=old;
 }
-function showWhatsNew(){openModal('whatsNewModal');try{localStorage.setItem('projectpulse_whats_new_seen_wo_tasks','1')}catch(e){}}
-function showWhatsNewOnce(){if(location.hash.startsWith('#piccloud=')||location.hash.startsWith('#picupdate='))return;try{if(localStorage.getItem('projectpulse_whats_new_seen_wo_tasks'))return}catch(e){}setTimeout(function(){showWhatsNew()},650)}
+function showWhatsNew(){openModal('whatsNewModal');try{localStorage.setItem('projectpulse_whats_new_seen_pic_format','1')}catch(e){}}
+function showWhatsNewOnce(){if(location.hash.startsWith('#piccloud=')||location.hash.startsWith('#picupdate='))return;try{if(localStorage.getItem('projectpulse_whats_new_seen_pic_format'))return}catch(e){}setTimeout(function(){showWhatsNew()},650)}
 function openModal(id){document.getElementById(id).classList.add('show')}function closeModal(id){document.getElementById(id).classList.remove('show')}
 function openProject(id){projectForm.reset();setPicValue(pPic);pId.value='';projectModalTitle.textContent=id?'Edit Proyek':'Tambah Proyek';let p=db.projects.find(x=>x.id===id);if(p){pId.value=p.id;pName.value=p.name;pCode.value=p.code||'';setPicValue(pPic,p.pic||'');pStart.value=p.start||'';pEnd.value=p.end||'';pReceivedDate.value=p.receivedDate||'';pPromisedReturn.value=p.promisedReturn||p.end||'';pStage.value=p.stage||'Penerimaan / intake';pReturnedDate.value=p.returnedDate||'';pHoldReason.value=p.holdReason||'';pPriority.value=normalizePriority(p.priority||'Sedang');pCustomer.value=p.customer||'';pDesc.value=p.desc||''}else{pStart.value=today();pStage.value='Penerimaan / intake'}openModal('projectModal')}
-projectForm.onsubmit=e=>{e.preventDefault();if(pStage.value==='Dikirim / kembali ke customer'&&!pReturnedDate.value&&!woStage({stage:pStage.value},woSummaries(db).get(pId.value)||[])){alert('Isi tanggal kembali aktual sebelum menutup Work Order.');return}let id=pId.value,prior=db.projects.find(x=>x.id===id)||{},p={...prior,id:id||uid(),name:pName.value.trim(),code:pCode.value,pic:pPic.value,start:pStart.value,end:pEnd.value,receivedDate:pReceivedDate.value,promisedReturn:pPromisedReturn.value||pEnd.value,stage:pStage.value,returnedDate:pReturnedDate.value,holdReason:pHoldReason.value.trim(),stageUpdatedAt:prior.stage===pStage.value?(prior.stageUpdatedAt||today()):today(),priority:pPriority.value,customer:pCustomer.value,desc:pDesc.value};if(id){db.projects=db.projects.map(x=>x.id===id?p:x);log('Work Order diperbarui: '+p.name+' · '+p.stage)}else{db.projects.push(p);log('Work Order baru: '+p.name+' · '+p.stage)}closeModal('projectModal');save();toast('Work Order tersimpan')};
-function openTask(projectId,id){taskForm.reset();setPicValue(tPic);tId.value='';taskModalTitle.textContent=id?'Edit Tugas':'Tambah Tugas';fillSelects();let t=db.tasks.find(x=>x.id===id);if(t){tId.value=t.id;tProject.value=t.projectId;tName.value=t.name;setPicValue(tPic,t.pic||'');tWeight.value=t.weight||'';tStart.value=t.start||'';tEnd.value=t.end||'';tDesc.value=t.desc||''}else{if(projectId)tProject.value=projectId;tStart.value=today()}openModal('taskModal')}
-taskForm.onsubmit=e=>{e.preventDefault();let id=tId.value,t={id:id||uid(),projectId:tProject.value,name:tName.value.trim(),pic:tPic.value,weight:tWeight.value,start:tStart.value,end:tEnd.value,desc:tDesc.value};if(id){db.tasks=db.tasks.map(x=>x.id===id?t:x);log('Task diperbarui: '+t.name)}else{db.tasks.push(t);log('Task baru: '+t.name)}closeModal('taskModal');save();toast('Task tersimpan')};
+projectForm.onsubmit=e=>{e.preventDefault();if(pStage.value==='Dikirim / kembali ke customer'&&!pReturnedDate.value&&!woStage({stage:pStage.value},woSummaries(db).get(pId.value)||[])){alert('Isi tanggal kembali aktual sebelum menutup Work Order.');return}let id=pId.value,prior=db.projects.find(x=>x.id===id)||{},p={...prior,id:id||uid(),name:woTitle(pName.value,true),code:pCode.value,pic:pPic.value,start:pStart.value,end:pEnd.value,receivedDate:pReceivedDate.value,promisedReturn:pPromisedReturn.value||pEnd.value,stage:pStage.value,returnedDate:pReturnedDate.value,holdReason:pHoldReason.value.trim(),stageUpdatedAt:prior.stage===pStage.value?(prior.stageUpdatedAt||today()):today(),priority:pPriority.value,customer:pCustomer.value,desc:pDesc.value};if(id){db.projects=db.projects.map(x=>x.id===id?p:x);log('Work Order diperbarui: '+p.name+' · '+p.stage)}else{db.projects.push(p);log('Work Order baru: '+p.name+' · '+p.stage)}closeModal('projectModal');save();toast('Work Order tersimpan')};
+function openTask(projectId,id){taskForm.reset();setPicValue(tPic);tId.value='';taskModalTitle.textContent=id?'Edit Tugas':'Tambah Tugas';fillSelects();let t=db.tasks.find(x=>x.id===id);if(t){tId.value=t.id;tProject.value=t.projectId;tName.value=t.name;setPicValue(tPic,t.pic||'');tWeight.value=t.weight||'';tStart.value=t.start||'';tEnd.value=t.end||'';tDesc.value=t.desc||''}else{if(projectId)tProject.value=projectId;tStart.value=today()}syncWorkTaskForm();openModal('taskModal')}
+taskForm.onsubmit=e=>{e.preventDefault();let id=tId.value,t={...db.tasks.find(item=>item.id===id),id:id||uid(),projectId:tProject.value,name:woTitle(tName.value,true),pic:woAssigned({name:tName.value,pic:tPic.value},'task'),weight:tWeight.value,start:tStart.value,end:tEnd.value,desc:tDesc.value};if(id){db.tasks=db.tasks.map(x=>x.id===id?t:x);log('Task diperbarui: '+t.name)}else{db.tasks.push(t);log('Task baru: '+t.name)}closeModal('taskModal');save();toast('Task tersimpan')};
 const DEFAULT_NOTE_TEMPLATES=['Masih proses dismantle','Proses Sketsa (Mang Dadang)','Proses Design Drawing','2D Drafting','Review Drawing MRE','Review Drawing (Paul- Chiro)','Approved Drawing','Menunggu Material Datang','Proses BOM','Cek Stock Material','Menunggu PO'];
 function getNoteTemplates(){return Array.isArray(db.noteTemplates)&&db.noteTemplates.length?db.noteTemplates.slice():DEFAULT_NOTE_TEMPLATES.slice()}
 function noteTemplateOptions(list,selected){return '<option value="">-- Pilih template atau isi manual --</option>'+list.map(function(t){return '<option value="'+esc(t)+'" '+(t===selected?'selected':'')+'>'+esc(t)+'</option>'}).join('')}
@@ -628,7 +628,7 @@ function useNoteTemplate(target,value){if(value){let el=document.getElementById(
 function addNoteTemplate(){let value=prompt('Nama template update / kendala baru:');if(value===null)return;value=value.trim();if(!value){alert('Nama template tidak boleh kosong.');return}let list=getNoteTemplates();if(list.some(function(t){return t.toLocaleLowerCase('id-ID')===value.toLocaleLowerCase('id-ID')})){alert('Template tersebut sudah ada.');return}list.push(value);db.noteTemplates=list;save();renderNoteTemplateSelect('sNoteTemplate',value);toast('Template baru tersimpan di master')}
 function renderDependencyChecks(projectId,excludeId,selected){let opts=db.subs.filter(x=>x.id!==excludeId&&taskOf(x.taskId)?.projectId===projectId);sDependsOn.innerHTML=opts.map(x=>'<label style="display:flex;gap:8px;align-items:flex-start;padding:7px;border:1px solid #e6ebf2;border-radius:8px"><input type="checkbox" value="'+x.id+'" '+(selected.includes(x.id)?'checked':'')+'><span>'+esc(x.name)+' · '+esc(x.pic||'PIC —')+' · '+esc(x.status||'Belum dikerjakan')+'</span></label>').join('')||'<small class="muted">Belum ada sub-task lain di proyek ini.</small>'}
 function openSubtask(id,taskId){subForm.reset();setPicValue(sPic);sId.value='';subModalTitle.textContent=id?'Edit Subtugas':'Tambah Subtugas';fillSelects();let s=db.subs.find(x=>x.id===id);if(s){sId.value=s.id;sTask.value=s.taskId;sName.value=s.name;setPicValue(sPic,s.pic||'');sStatus.value=s.status;sProgress.value=typeof s.progress==='number'?s.progress:(s.status==='Selesai'?100:s.status==='Sedang dikerjakan'?50:0);sProgressNum.value=sProgress.value;sPlanStart.value=s.planStart||'';sDue.value=s.due||'';sActualStart.value=s.actualStart||'';sActualEnd.value=s.actualEnd||'';sNote.value=s.note||'';renderNoteTemplateSelect('sNoteTemplate',s.note||'');sRecoveryPlan.value=s.recoveryPlan||'';sRecoveryOwner.value=s.recoveryOwner||'';sRecoveryDue.value=s.recoveryDue||'';renderDependencyChecks(taskOf(s.taskId)?.projectId,s.id,s.dependsOn||[])}else{if(taskId)sTask.value=taskId;renderNoteTemplateSelect('sNoteTemplate','');sProgress.value=0;sProgressNum.value=0;sPlanStart.value=today();sRecoveryPlan.value='';sRecoveryOwner.value='';sRecoveryDue.value='';let z=taskOf(sTask.value),pid=z&&z.projectId;renderDependencyChecks(pid,'',[])}syncWorkSubForm();openModal('subModal')}
-subForm.onsubmit=e=>{e.preventDefault();let id=sId.value,old=db.subs.find(x=>x.id===id),status=sStatus.value,progress=Math.max(0,Math.min(100,Number(sProgressNum.value)||0)),actualStart=sActualStart.value,actualEnd=sActualEnd.value;if(status==='Sedang dikerjakan'&&!actualStart)actualStart=today();if(status==='Selesai'){progress=100;if(!actualStart)actualStart=today();if(!actualEnd)actualEnd=today()}if(status!=='Selesai')actualEnd='';if(progress>=100)status='Selesai';else if(progress>0)status='Sedang dikerjakan';else status='Belum dikerjakan';if(woAllowed({name:sName.value},'sub')||old?.wbs?.length){status=old?.status||'Belum dikerjakan';progress=woRaw(old);actualStart=old?.actualStart||'';actualEnd=old?.actualEnd||'';}let chosenDeps=[...sDependsOn.querySelectorAll('input[type=checkbox]:checked')].map(o=>o.value),blocked=chosenDeps.filter(x=>{let d=db.subs.find(y=>y.id===x);return !d||subProgress(d)<100});if(blocked.length&&progress>(old?subProgress(old):0)){alert('Update progress ditahan. Selesaikan predecessor terlebih dahulu: '+blocked.map(x=>db.subs.find(y=>y.id===x)?.name||x).join(', '));return}let stamp=today(),progressChanged=!old||progress!==subProgress(old),s={...old,id:id||uid(),taskId:sTask.value,name:sName.value.trim(),pic:woAssigned({name:sName.value,pic:sPic.value},'sub'),status,progress,planStart:sPlanStart.value,due:sDue.value,actualStart,actualEnd,note:woAllowed({name:sName.value},'sub')||old?.wbs?.length?(old?.note||''):sNote.value,recoveryPlan:sRecoveryPlan.value,recoveryOwner:sRecoveryOwner.value,recoveryDue:sRecoveryDue.value,dependsOn:chosenDeps,lastUpdatedAt:stamp,lastProgressAt:progressChanged?stamp:(old?.lastProgressAt||''),history:old?.history||[]};s.history.push({status,progress,date:stamp,updatedAt:stamp});if(id){db.subs=db.subs.map(x=>x.id===id?s:x);log('Sub-task diperbarui: '+s.name+' → '+status)}else{db.subs.push(s);log('Sub-task baru: '+s.name)}closeModal('subModal');save();toast('Progress berhasil diperbarui')};
+subForm.onsubmit=e=>{e.preventDefault();let id=sId.value,old=db.subs.find(x=>x.id===id),status=sStatus.value,progress=Math.max(0,Math.min(100,Number(sProgressNum.value)||0)),actualStart=sActualStart.value,actualEnd=sActualEnd.value;if(status==='Sedang dikerjakan'&&!actualStart)actualStart=today();if(status==='Selesai'){progress=100;if(!actualStart)actualStart=today();if(!actualEnd)actualEnd=today()}if(status!=='Selesai')actualEnd='';if(progress>=100)status='Selesai';else if(progress>0)status='Sedang dikerjakan';else status='Belum dikerjakan';if(old?.wbs?.length&&!woDoc(sName.value)){status=old?.status||'Belum dikerjakan';progress=woRaw(old);actualStart=old?.actualStart||'';actualEnd=old?.actualEnd||'';}let chosenDeps=[...sDependsOn.querySelectorAll('input[type=checkbox]:checked')].map(o=>o.value),blocked=chosenDeps.filter(x=>{let d=db.subs.find(y=>y.id===x);return !d||subProgress(d)<100});if(blocked.length&&progress>(old?subProgress(old):0)){alert('Update progress ditahan. Selesaikan predecessor terlebih dahulu: '+blocked.map(x=>db.subs.find(y=>y.id===x)?.name||x).join(', '));return}let stamp=today(),progressChanged=!old||progress!==subProgress(old),s={...old,id:id||uid(),taskId:sTask.value,name:woTitle(sName.value),pic:woAssigned({name:sName.value,pic:sPic.value},'sub',taskOf(sTask.value)),status,progress,planStart:sPlanStart.value,due:sDue.value,actualStart,actualEnd,note:sNote.value,recoveryPlan:sRecoveryPlan.value,recoveryOwner:sRecoveryOwner.value,recoveryDue:sRecoveryDue.value,dependsOn:chosenDeps,lastUpdatedAt:stamp,lastProgressAt:progressChanged?stamp:(old?.lastProgressAt||''),history:old?.history||[]};s.history.push({status,progress,date:stamp,updatedAt:stamp});if(id){db.subs=db.subs.map(x=>x.id===id?s:x);log('Sub-task diperbarui: '+s.name+' → '+status)}else{db.subs.push(s);log('Sub-task baru: '+s.name)}closeModal('subModal');save();toast('Progress berhasil diperbarui')};
 function quickStatus(id){let s=db.subs.find(x=>x.id===id);if(!s||woAllowed(s,'sub')||s.wbs?.length)return toast('Perbarui melalui tautan PIC atau detail WBS.');let blocked=(s.dependsOn||[]).filter(id=>{let d=db.subs.find(x=>x.id===id);return !d||subProgress(d)<100});if(blocked.length){alert('Belum dapat update: selesaikan predecessor '+blocked.map(id=>db.subs.find(x=>x.id===id)?.name||id).join(', '));return}let choices=['Belum dikerjakan','Sedang dikerjakan','Selesai'];s.status=choices[(choices.indexOf(s.status)+1)%3];s.progress=s.status==='Selesai'?100:s.status==='Sedang dikerjakan'?50:0;if(s.status==='Sedang dikerjakan'&&!s.actualStart)s.actualStart=today();if(s.status==='Selesai'){if(!s.actualStart)s.actualStart=today();s.actualEnd=today()}else s.actualEnd='';s.history=s.history||[];s.lastUpdatedAt=today();s.lastProgressAt=today();s.history.push({status:s.status,progress:s.progress,date:today(),updatedAt:today()});log('Status '+s.name+' diubah menjadi '+s.status);save();toast('Status: '+s.status)}
 function deleteProject(id){if(!confirm('Hapus proyek beserta semua task dan sub-task?'))return;let tids=db.tasks.filter(t=>t.projectId===id).map(t=>t.id);db.subs=db.subs.filter(s=>!tids.includes(s.taskId));db.tasks=db.tasks.filter(t=>t.projectId!==id);db.projects=db.projects.filter(p=>p.id!==id);log('Proyek dihapus');save()}
 function renameTask(id){
@@ -681,12 +681,12 @@ function renameWbsNamedTemplate(id){var t=getWbsNamedTemplates().find(function(x
 function deleteWbsNamedTemplate(id){if(!confirm('Hapus template ini? Proses di sub-task tidak terpengaruh.'))return;db.wbsNamedTemplates=db.wbsNamedTemplates.filter(function(x){return x.id!==id});save();renderWbsLibraryManager()}
 function addStandardWbsToSubSilent(sub){sub.wbs=sub.wbs||[];var defaults=['Dismantle','Cleaning','Sandblasting','Dimensional Check','Visual Check','NDT Check'],existing=sub.wbs.map(function(x){return x.name.toLowerCase()});defaults.forEach(function(name){if(!existing.includes(name.toLowerCase()))sub.wbs.push({id:uid(),name:name,pic:'',status:'Belum dikerjakan',progress:0,start:'',due:'',note:'',actualStart:'',actualEnd:''})})}
 function renderWBS(){var filter=document.getElementById('wbsProjectFilter');if(!filter)return;var keep=filter.value;filter.innerHTML='<option value="">Pilih proyek</option>'+db.projects.map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>'}).join('');if(keep&&db.projects.some(function(p){return p.id===keep}))filter.value=keep;var pid=filter.value,q=(document.getElementById('wbsSearch').value||'').toLowerCase(),box=document.getElementById('wbsContent');if(!pid){box.innerHTML='<div class="empty">Pilih proyek untuk menampilkan WBS per task dan sub-task.</div>';return}var tasks=db.tasks.filter(function(t){return t.projectId===pid}),html='';tasks.forEach(function(t){var subs=db.subs.filter(function(x){return x.taskId===t.id}),taskSteps=t.wbs||[],match=!q||(t.name+' '+subs.map(function(s){return s.name+' '+(s.wbs||[]).map(function(z){return z.name+' '+z.pic}).join(' ')}).join(' ')+' '+taskSteps.map(function(z){return z.name+' '+z.pic}).join(' ')).toLowerCase().includes(q);if(!match)return;var taskAvg=taskSteps.length?Math.round(taskSteps.reduce(function(n,x){return n+(Number(x.progress)||0)},0)/taskSteps.length):0;html+='<div class="project-card"><div class="project-card-top"><div><h3>'+esc(t.name)+'</h3><div class="muted" style="font-size:11px">PIC Task: '+esc(t.pic||'—')+' · '+fmt(t.start)+' – '+fmt(t.end)+' · '+taskSteps.length+' proses task</div></div><div class="actions"><span class="pill s-proses">'+taskAvg+'% WBS Task</span><button class="btn-soft mini" onclick="addWbsTaskProcess(\''+t.id+'\')">＋ Proses Task</button><button class="btn-plain mini" onclick="makePicBulkLink(\''+t.id+'\')">Link PIC & Follow-up</button></div></div>';if(taskSteps.length){html+='<div class="task-body"><b style="font-size:12px">WBS LEVEL TASK</b>';taskSteps.forEach(function(x,i){html+=renderWbsProcessRow(t.id,'',x,i,'task')});html+='</div>'}subs.forEach(function(sub){if(q&&!((t.name+' '+sub.name+' '+(sub.wbs||[]).map(function(z){return z.name+' '+z.pic}).join(' ')).toLowerCase().includes(q)))return;var steps=sub.wbs||[],avg=steps.length?Math.round(steps.reduce(function(n,x){return n+(Number(x.progress)||0)},0)/steps.length):0;html+='<div class="task" style="margin-top:12px"><div class="task-head"><div><b>'+esc(sub.name)+'</b><div class="muted" style="font-size:11px">PIC sub-task: '+esc(sub.pic||'—')+' · '+steps.length+' proses · Progress WBS '+avg+'%</div></div><div class="actions"><button class="btn-soft mini" onclick="addWbsProcess(\''+sub.id+'\')">＋ Proses Sub-task</button><button class="btn-plain mini" onclick="makePicBulkLink(\''+t.id+'\',\''+sub.id+'\')">Tautan PIC</button><button class="btn-plain mini" onclick="openWbsPicker(\''+sub.id+'\')">＋ Pilih Proses</button></div></div><div class="task-body">';if(steps.length){steps.forEach(function(x,i){html+=renderWbsProcessRow(t.id,sub.id,x,i,'sub')})}else{html+='<div class="empty" style="padding:12px">Belum ada proses produksi untuk sub-task ini.</div>'}html+='</div></div>'});html+='</div>'});box.innerHTML=html||'<div class="empty">Belum ada task yang cocok pada proyek ini.</div>'}
-function renderWbsProcessRow(taskId,subId,x,i,level){return '<div class="subtask" '+woOrderAttributes(subId?'wbsSub':'wbsTask',subId||taskId,x.id)+'><div class="subname">'+(i+1)+'. '+esc(x.name)+'<small>'+esc(x.note||'')+'</small></div><div><span class="pill '+statusClass(x.status||'Belum dikerjakan')+'">'+esc(x.status||'Belum dikerjakan')+'</span><strong style="color:var(--blue)"> '+woRaw(x)+'%</strong></div><div><small>PIC</small>'+esc(woAssigned(x,subId?'wbsSub':'wbsTask')||'Pilih PIC')+'</div><div><small>Jadwal</small>'+fmt(x.start)+'<small>Target: '+fmt(x.due)+'</small></div><div class="actions">'+woOrderButtons(x.name)+'<button class="btn-plain mini" onclick="editWbsProcess(\''+(subId||'')+'\',\''+x.id+'\',\''+taskId+'\')">Edit</button><button class="btn-plain mini" onclick="makeWbsProcessPicLink(\''+taskId+'\',\''+(subId||'')+'\',\''+x.id+'\')">Tautan PIC</button><button class="btn-danger mini" onclick="deleteWbsProcess(\''+(subId||'')+'\',\''+x.id+'\',\''+taskId+'\')">×</button></div></div>'}
+function renderWbsProcessRow(taskId,subId,x,i,level){return '<div class="subtask" '+woOrderAttributes(subId?'wbsSub':'wbsTask',subId||taskId,x.id)+'><div class="subname">'+(i+1)+'. '+esc(x.name)+'<small>'+esc(x.note||'')+'</small></div><div><span class="pill '+statusClass(x.status||'Belum dikerjakan')+'">'+esc(x.status||'Belum dikerjakan')+'</span><strong style="color:var(--blue)"> '+woRaw(x)+'%</strong></div><div><small>PIC</small>'+esc(woAssigned(x,subId?'wbsSub':'wbsTask')||'Pilih PIC')+'</div><div><small>Jadwal</small>'+fmt(x.start)+'<small>Target: '+fmt(x.due)+'</small></div><div class="actions">'+woOrderButtons(x.name)+'<button class="btn-plain mini" onclick="editWbsProcess(\''+(subId||'')+'\',\''+x.id+'\',\''+taskId+'\')">Perbarui</button><button class="btn-plain mini" onclick="editWbsProcess(\''+(subId||'')+'\',\''+x.id+'\',\''+taskId+'\')">Edit</button><button class="btn-plain mini" onclick="makeWbsProcessPicLink(\''+taskId+'\',\''+(subId||'')+'\',\''+x.id+'\')">Tautan PIC</button><button class="btn-danger mini" onclick="deleteWbsProcess(\''+(subId||'')+'\',\''+x.id+'\',\''+taskId+'\')">×</button></div></div>'}
 function addWbsProcess(subId){openWbsModal(subId,null)}
 function addWbsTaskProcess(taskId){openWbsModal('',null,taskId)}
 function editWbsProcess(subId,processId,taskId){openWbsModal(subId,processId,taskId||'')}
 function openWbsModal(subId,processId,taskId){var sub=subId?db.subs.find(function(x){return x.id===subId}):null,task=taskId?taskOf(taskId):(sub?taskOf(sub.taskId):null);if(!task)return;wbsForm.reset();wbsSubId.value=subId||'';wbsTaskId.value=task.id;wbsProcessId.value=processId||'';var list=sub?(sub.wbs||[]):(task.wbs||[]),p=list.find(function(x){return x.id===processId});wbsModalTitle.textContent=p?'Edit Proses Produksi':(sub?'Tambah Proses untuk Sub-task':'Tambah Proses untuk Task');wbsName.value=p?p.name:'';setPicValue(wbsPic,p?p.pic||'':(sub?sub.pic||task.pic||'':task.pic||''),Boolean(p));wbsStatus.value=p?p.status||'Belum dikerjakan':'Belum dikerjakan';wbsProgress.value=p&&p.progress!==undefined?p.progress:0;wbsStart.value=p?p.start||'':today();wbsDue.value=p?p.due||'':(sub?sub.due||'':task.end||'');wbsNote.value=p?p.note||'':'';syncWorkWbsForm();openModal('wbsModal')}
-wbsForm.onsubmit=function(e){e.preventDefault();var sub=db.subs.find(function(x){return x.id===wbsSubId.value}),task=taskOf(wbsTaskId.value);if(!task)return;var list=sub?(sub.wbs=sub.wbs||[],sub.wbs):(task.wbs=task.wbs||[],task.wbs),id=wbsProcessId.value,old=list.find(function(x){return x.id===id}),progress=Math.max(0,Math.min(100,Number(wbsProgress.value)||0)),status=progress>=100?'Selesai':progress>0?'Sedang dikerjakan':wbsStatus.value;progress=woRaw(old);status=old?.status||'Belum dikerjakan';var item={...old,id:id||uid(),name:wbsName.value.trim(),pic:woAssigned({name:wbsName.value,pic:wbsPic.value},'wbsSub'),status:status,progress:progress,start:wbsStart.value,due:wbsDue.value,note:old?.note||'',actualStart:(old&&old.actualStart)||(progress>0?today():''),actualEnd:status==='Selesai'?((old&&old.actualEnd)||today()):''};if(old)list=list.map(function(x){return x.id===id?item:x});else list.push(item);if(sub)sub.wbs=list;else task.wbs=list;log((old?'Proses WBS diperbarui: ':'Proses WBS ditambahkan: ')+item.name+' | '+(sub?sub.name:task.name));closeModal('wbsModal');save();toast('Proses produksi tersimpan')};
+wbsForm.onsubmit=function(e){e.preventDefault();var sub=db.subs.find(function(x){return x.id===wbsSubId.value}),task=taskOf(wbsTaskId.value);if(!task)return;var list=sub?(sub.wbs=sub.wbs||[],sub.wbs):(task.wbs=task.wbs||[],task.wbs),id=wbsProcessId.value,old=list.find(function(x){return x.id===id}),progress=Math.max(0,Math.min(100,Number(wbsProgress.value)||0)),status=progress>=100?'Selesai':progress>0?'Sedang dikerjakan':wbsStatus.value;if(wbsStatus.value==='Selesai')progress=100;status=progress>=100?'Selesai':progress>0?'Sedang dikerjakan':'Belum dikerjakan';if(sub&&progress>woRaw(old)&&(sub.dependsOn||[]).some(depId=>{const dep=db.subs.find(entry=>entry.id===depId);return !dep||subProgress(dep)<100})){alert('Selesaikan pekerjaan pendahulu sebelum menaikkan progres.');return;}var item={...old,id:id||uid(),name:woTitle(wbsName.value),pic:woAssigned({name:wbsName.value,pic:wbsPic.value},'wbsSub'),status:status,progress:progress,start:wbsStart.value,due:wbsDue.value,note:wbsNote.value,actualStart:(old&&old.actualStart)||(progress>0?today():''),actualEnd:status==='Selesai'?((old&&old.actualEnd)||today()):''};if(old)list=list.map(function(x){return x.id===id?item:x});else list.push(item);if(sub)sub.wbs=list;else task.wbs=list;log((old?'Proses WBS diperbarui: ':'Proses WBS ditambahkan: ')+item.name+' | '+(sub?sub.name:task.name));closeModal('wbsModal');save();toast('Proses produksi tersimpan')};
 function deleteWbsProcess(subId,processId,taskId){var parent=subId?db.subs.find(function(x){return x.id===subId}):taskOf(taskId);if(!parent)return;if(!confirm('Hapus proses produksi ini?'))return;parent.wbs=(parent.wbs||[]).filter(function(x){return x.id!==processId});log('Proses WBS dihapus: '+processId);save()}
 function addStandardWbsToSub(subId){var sub=db.subs.find(function(x){return x.id===subId});if(!sub)return;var before=(sub.wbs||[]).length;addStandardWbsToSubSilent(sub);var added=sub.wbs.length-before;log(added+' proses standar ditambahkan ke '+sub.name);save();toast(added?added+' proses standar ditambahkan':'Semua proses standar sudah tersedia')}
 function addStandardWbs(){var pid=wbsProjectFilter.value;if(!pid){toast('Pilih proyek terlebih dahulu');return}var subs=db.subs.filter(function(s){return db.tasks.some(function(t){return t.id===s.taskId&&t.projectId===pid})});if(!subs.length){toast('Proyek ini belum memiliki sub-task');return}if(!confirm('Tambahkan proses standar ke seluruh sub-task pada proyek ini? Proses yang sudah ada tidak akan digandakan.'))return;var count=0;subs.forEach(function(s){var before=(s.wbs||[]).length;addStandardWbsToSubSilent(s);count+=s.wbs.length-before});log('Proses standar ditambahkan pada proyek '+projectName(pid));save();toast(count+' proses standar ditambahkan')}
@@ -699,7 +699,7 @@ function previewMassPic(){let input=document.getElementById('massPicName'),statu
 function renderMassPicOptions(){
   const list=document.getElementById('massPicOptions');
   if(!list)return;
-  const names=[...new Set([...picHistoryNames(),...woDrawingPics,...woDocumentPics,'PC'])].sort((a,b)=>a.localeCompare(b,'id'));
+  const names=[...new Set([...picHistoryNames(),...woDrawingPics,...woDocumentPics,...woJsePics,'PC'])].sort((a,b)=>a.localeCompare(b,'id'));
   list.replaceChildren(...names.map(name=>new Option(name,name)));
 }
 async function createMassPicLink(){let input=document.getElementById('massPicName'),status=document.getElementById('massPicStatus'),pic=input&&input.value.trim();if(!pic){alert('Masukkan nama PIC terlebih dahulu.');return}if(!cloudReady){alert('Login dan sinkronkan ProjectPulse terlebih dahulu.');return}let items=getMassPicItems(pic);if(!items.length){status.textContent='Tidak ada pekerjaan belum selesai untuk '+pic+'.';return}if(items.length>100){alert('Ada '+items.length+' sub-task untuk PIC ini. Batas satu link adalah 100 item; pecah berdasarkan proyek atau buat beberapa link.');return}let popup=window.open('about:blank','_blank');status.textContent='Membuat link untuk '+items.length+' sub-task…';try{let d=await cloudApi('create_pic_link',{pic:pic,payload:{project:'Semua proyek',task:'Follow-up massal'},items:items,expiresDays:14}),msg='Halo '+pic+', mohon update '+items.length+' pekerjaan yang belum selesai di seluruh proyek melalui link ini:\n'+d.link+'\n\nSetiap sub-task menampilkan nama proyek, task, target, dan progress saat ini.';if(popup)popup.location.href='https://wa.me/?text='+encodeURIComponent(msg);else alert('Link berhasil dibuat:\n'+d.link+'\n\nBuka WhatsApp dan kirim link ini ke '+pic+'.');status.textContent='Link massal dibuat untuk '+items.length+' sub-task PIC '+pic+'. Berlaku sampai '+new Date(d.expires_at).toLocaleDateString('id-ID')+'.'}catch(e){if(popup)popup.close();status.textContent='Gagal membuat link: '+e.message}}
@@ -717,8 +717,8 @@ async function makePicBulkLink(taskId,subId,processId){
   const available=woFollowupRecords(db).filter(record=>record.task.id===taskId&&(!subId||record.sub?.id===subId)&&(!processId||record.type!=='sub'&&record.item.id===processId)&&workRecordOpen(record));
   if(!available.length)return toast('Tidak ada pekerjaan terbuka untuk pilihan ini.');
   const names=[...new Set(available.flatMap(record=>{
-    const assigned=woAssigned(record.item,record.type)||(!woAllowed(record.item,record.type)?record.task.pic:'');
-    return assigned?[assigned]:woAllowed(record.item,record.type)||[];
+    const assigned=woAssigned(record.item,record.type,record.task)||(!woAllowed(record.item,record.type,record.task)?record.task.pic:'');
+    return assigned?[assigned]:woAllowed(record.item,record.type,record.task)||[];
   }))];
   let pic=names.length===1?names[0]:prompt(names.length?'Pilih nama PIC dari daftar berikut:\n'+names.join('\n'):'Nama PIC penerima tautan:');
   if(!pic?.trim())return;
@@ -817,7 +817,15 @@ chatgptApplyButton.onclick = () => handleChatgptApproval('apply');
 window.addEventListener('hashchange', openChatgptApproval);
 
 
-const woDrawingPics=['Bima','Robbi','Ifah','Dimas','Huda','Maytasya'];
+const woInspectionPics=['Bima','Ifah','Huda','Dimas','Robbi'];
+const woDrawingPics=woInspectionPics;
+const woBomPics=[...woInspectionPics,'Maytasya'];
+const woJsePics=['Irfan','Maytasya'];
+function woTitle(value,uppercase=false){
+  const name=String(value||'').trim();
+  if(uppercase)return name.toLocaleUpperCase('id');
+  return name.toLocaleLowerCase('id').replace(/(^|[^\p{L}\p{N}])\p{L}/gu,part=>part.toLocaleUpperCase('id'));
+}
 const woDocumentPics=['Maytasya','Wisnu B.','Aulia'];
 function woKey(value){
   return String(value||'').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
@@ -830,25 +838,40 @@ function woDoc(value){
   const name=woKey(value);
   if(/^packing list (pengambilan|pickup)\b/.test(name))return 'pickup';
   if(/^packing list (pengiriman|delivery)\b/.test(name))return 'packing';
-  if(/^incoming inspecti(?:on|o|n)(?: report)?$/.test(name))return 'incoming';
-  if(/^final inspecti(?:on|o|n)(?: report)?$/.test(name))return 'final';
+  if(/^incoming (?:report|inspecti(?:on|o|n)(?: report)?)$/.test(name))return 'incoming';
+  if(/^final (?:report|inspecti(?:on|o|n)(?: report)?)$/.test(name))return 'final';
   if(/^jse\b|^pembuatan jse\b/.test(name))return 'jse';
   return '';
 }
 function woDrawing(value){return /^(drawing|bom release|release bom)$/.test(woKey(value));}
-function woAllowed(item,type){
-  if(type!=='sub')return woDrawing(item.name)?woDrawingPics:['PC'];
+function woAllowed(item,type,task){
+  if(type==='task')return woTaskKind(item.name)==='inspection'?woInspectionPics:null;
+  if(type!=='sub'){
+    if(woKey(item.name)==='drawing')return woDrawingPics;
+    return woDrawing(item.name)?woBomPics:['PC'];
+  }
+  if(woTaskKind(task?.name)==='inspection')return woInspectionPics;
   const doc=woDoc(item.name);
-  return doc&&doc!=='jse'?woDocumentPics:null;
+  if(doc==='jse')return woJsePics;
+  if(doc)return woDocumentPics;
+  return null;
 }
-function woAssigned(item,type){
-  const options=woAllowed(item,type);
+function woAssigned(item,type,task){
+  const options=woAllowed(item,type,task);
   if(options?.length===1)return options[0];
   return options?options.find(name=>woSamePic(name,item.pic))||'':String(item.pic||'').trim();
 }
-function woCanUpdate(item,type,pic){
-  const options=woAllowed(item,type);
-  return !options||options.some(name=>woSamePic(name,pic))&&(!woAssigned(item,type)||woSamePic(woAssigned(item,type),pic));
+function woCanUpdate(item,type,pic,task){
+  const options=woAllowed(item,type,task),assigned=woAssigned(item,type,task);
+  return !options||options.some(name=>woSamePic(name,pic))&&(!assigned||woSamePic(assigned,pic));
+}
+function woInheritMain(item,type,task,project){
+  const kind=woTaskKind((task||item).name);
+  if(type==='task'&&kind==='repair')return String(project?.pic||'').trim();
+  const inherits=type==='task'&&kind==='inspection'
+    ||type==='sub'&&kind==='inspection'
+    ||(type==='wbsSub'||type==='wbsTask')&&kind==='repair'&&woKey(item.name)==='drawing';
+  return inherits?woInspectionPics.find(name=>woSamePic(name,project?.pic))||'':'';
 }
 function woRaw(item){
   const value=item?.progress;
@@ -919,6 +942,25 @@ function woStage(project,rows){
   return 'Penerimaan / intake';
 }
 function woApplyStages(state,day){
+  const projects=new Map((state.projects||[]).map(project=>[project.id,project]));
+  const tasks=new Map((state.tasks||[]).map(task=>[task.id,task]));
+  for(const project of projects.values())project.name=woTitle(project.name,true);
+  function normalize(item,type,task,project){
+    item.name=woTitle(item.name,type==='task');
+    const inherited=woInheritMain(item,type,task,project);
+    if(inherited)item.pic=inherited;
+    else if(woAllowed(item,type,task)?.length===1)item.pic=woAssigned(item,type,task);
+  }
+  for(const task of tasks.values()){
+    const project=projects.get(task.projectId);
+    normalize(task,'task',task,project);
+    for(const process of task.wbs||[])normalize(process,'wbsTask',task,project);
+  }
+  for(const sub of state.subs||[]){
+    const task=tasks.get(sub.taskId),project=projects.get(task?.projectId);
+    normalize(sub,'sub',task,project);
+    for(const process of sub.wbs||[])normalize(process,'wbsSub',task,project);
+  }
   const groups=woSummaries(state);
   for(const project of state.projects||[]){
     const stage=woStage(project,groups.get(project.id)||[]);
@@ -931,20 +973,19 @@ function woProjectKpis(rows){
     for(const item of items||[])groups[woDrawing(item.name)?'engineering':'workshop'].push(woRaw(item));
   };
   for(const {task,subs,kind,progress} of rows){
+    if(['material','inspection'].includes(kind)){groups.engineering.push(progress);continue;}
     const taskDoc=woDoc(task.name);
+    if(taskDoc){groups.admin.push(progress);continue;}
     addWbs(task.wbs);
     for(const sub of subs){
-      const doc=woDoc(sub.name);
-      if(['jse','incoming','final'].includes(doc||taskDoc))groups.admin.push(woSubProgress(sub));
+      if(woDoc(sub.name)){groups.admin.push(woSubProgress(sub));continue;}
       addWbs(sub.wbs);
-      if(doc||taskDoc||sub.wbs?.length)continue;
-      if(kind==='material'||woDrawing(sub.name))groups.engineering.push(woRaw(sub));
+      if(sub.wbs?.length)continue;
+      if(woDrawing(sub.name))groups.engineering.push(woRaw(sub));
       else if(['receiving','repair','assembly','testing'].includes(kind))groups.workshop.push(woRaw(sub));
     }
     if(!subs.length&&!task.wbs?.length){
-      const doc=woDoc(task.name);
-      if(['jse','incoming','final'].includes(doc))groups.admin.push(progress);
-      else if(kind==='material'||woDrawing(task.name))groups.engineering.push(progress);
+      if(woDrawing(task.name))groups.engineering.push(progress);
       else if(['receiving','repair','assembly','testing'].includes(kind))groups.workshop.push(progress);
     }
   }
@@ -972,9 +1013,9 @@ function woRecordId(record){
 }
 function woRecordCan(record,pic){
   const {item,type,task}=record;
-  if(!woCanUpdate(item,type,pic))return false;
-  if(woAllowed(item,type))return true;
-  const assigned=woAssigned(item,type)||task.pic;
+  if(!woCanUpdate(item,type,pic,task))return false;
+  if(woAllowed(item,type,task))return true;
+  const assigned=woAssigned(item,type,task)||task.pic;
   return !assigned||woSamePic(assigned,pic);
 }
 function woReportProgress(record){
@@ -989,7 +1030,7 @@ function woLinkItem(record,state,templates){
     return {id,name:dependency?.name||'',progress:dependency?woSubProgress(dependency):0};
   }):[];
   return {id:woRecordId(record),name:[project.name,task.name,sub?.name,type!=='sub'?item.name:''].filter(Boolean).join(' / '),
-    pic:woAssigned(item,type)||task.pic||'',project:project.name,task:task.name,itemType:type,status,progress,due:item.due||'',note:item.note||'',noteTemplates:templates,dependsOn};
+    pic:woAssigned(item,type,task)||(!woAllowed(item,type,task)?task.pic:'')||'',project:project.name,task:task.name,itemType:type,status,progress,due:item.due||'',note:item.note||'',noteTemplates:templates,dependsOn};
 }
 
 
@@ -1152,31 +1193,46 @@ document.addEventListener('pointercancel',event=>{
   if(event.pointerId===woTouchPointer){woTouchPointer=null;clearWoDrag();}
 });
 
-function setWorkPicOptions(select,name,type,value){
-  const options=woAllowed({name},type);
-  if(!options){setPicValue(select,value);return;}
-  select.replaceChildren(new Option('Pilih PIC',''),...options.map(pic=>new Option(pic,pic)));
-  select.value=woAssigned({name,pic:value},type);
+function setWorkPicOptions(select,item,type,task,project){
+  const allowed=woAllowed(item,type,task),inherited=woInheritMain(item,type,task,project);
+  const value=inherited||item.pic;
+  if(allowed){
+    select.replaceChildren(new Option('Pilih PIC',''),...allowed.map(pic=>new Option(pic,pic)));
+    select.value=woAssigned({...item,pic:value},type,task);
+  }else{
+    setPicValue(select,value);
+  }
+  select.disabled=!!inherited||allowed?.length===1;
+  select.title=inherited?'Mengikuti PIC utama proyek':'';
+}
+function syncWorkTaskForm(){
+  const item={name:tName.value,pic:tPic.value};
+  setWorkPicOptions(tPic,item,'task',item,db.projects.find(project=>project.id===tProject.value));
 }
 function syncWorkSubForm(){
-  const old=db.subs.find(item=>item.id===sId.value);
-  const restricted=!!woAllowed({name:sName.value},'sub');
-  const managed=restricted||!!old?.wbs?.length;
-  setWorkPicOptions(sPic,sName.value,'sub',sPic.value);
-  for(const id of ['sProgress','sProgressNum','sStatus','sNote','sNoteTemplate','sActualStart','sActualEnd']){
-    const field=document.getElementById(id);
-    if(field)field.disabled=managed;
+  const old=db.subs.find(item=>item.id===sId.value),task=taskOf(sTask.value);
+  const managed=!!old?.wbs?.length&&!woDoc(sName.value);
+  setWorkPicOptions(sPic,{name:sName.value,pic:sPic.value},'sub',task,db.projects.find(project=>project.id===task?.projectId));
+  for(const id of ['sProgress','sProgressNum','sStatus','sActualStart','sActualEnd'])document.getElementById(id).disabled=managed;
+  if(managed){
+    sProgress.value=sProgressNum.value=woSubProgress(old);
+    sStatus.value=woDisplayStatus(old);
   }
   const hint=document.getElementById('woSubMode');
   hint.hidden=!managed;
-  hint.textContent=old?.wbs?.length?'Progres dihitung dari proses WBS.':'Progres dan catatan diisi melalui tautan PIC yang sesuai.';
+  hint.textContent='Status dan progres dihitung dari WBS. Untuk memperbarui, buka proses di Sub-subtask · WBS.';
 }
 function syncWorkWbsForm(){
-  setWorkPicOptions(wbsPic,wbsName.value,'wbsSub',wbsPic.value);
-  for(const id of ['wbsProgress','wbsStatus','wbsNote'])document.getElementById(id).disabled=true;
+  const task=taskOf(wbsTaskId.value);
+  setWorkPicOptions(wbsPic,{name:wbsName.value,pic:wbsPic.value},'wbsSub',task,db.projects.find(project=>project.id===task?.projectId));
 }
+tName.addEventListener('input',syncWorkTaskForm);
+tProject.addEventListener('change',syncWorkTaskForm);
 sName.addEventListener('input',syncWorkSubForm);
+sTask.addEventListener('change',syncWorkSubForm);
 wbsName.addEventListener('input',syncWorkWbsForm);
+wbsStatus.addEventListener('change',()=>{wbsProgress.value=wbsStatus.value==='Selesai'?100:wbsStatus.value==='Sedang dikerjakan'?Math.min(99,Math.max(1,Number(wbsProgress.value)||50)):0;});
+for(const [field,upper] of [[pName,true],[tName,true],[sName,false],[wbsName,false]])field.addEventListener('blur',()=>{field.value=woTitle(field.value,upper);});
 function workRecordOpen(record){
   return !(record.type==='sub'&&record.item.wbs?.length&&!woAllowed(record.item,'sub'))&&woReportProgress(record)<100;
 }
@@ -1185,8 +1241,8 @@ function getWorkFollowup(pic){
   const records=woFollowupRecords(db);
   return records.filter(record=>{
     if(!workRecordOpen(record)||!woRecordCan(record,pic))return false;
-    const selected=woAssigned(record.item,record.type)||record.task.pic;
-    return !!woAllowed(record.item,record.type)||woSamePic(selected,pic);
+    const selected=woAssigned(record.item,record.type,record.task)||record.task.pic;
+    return !!woAllowed(record.item,record.type,record.task)||woSamePic(selected,pic);
   });
 }
 
