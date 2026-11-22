@@ -101,6 +101,30 @@ function buildRepairReport(){
     }
     report.groups=[...groups.values()].map(group=>({...group,recommendation:group.recommendation||'Konfirmasi kendala, tindakan pemulihan, dan estimasi selesai dengan PIC.'}));
   }
+  const wbsRows=[];
+  function addWbsRow(project,level,name,item,progress,target,owner){
+    const status=progress>=100?'Selesai':metricDate(target)&&target<today()?'Terlambat':metricStatus(item,progress);
+    wbsRows.push([
+      text(metricWorkTitle(project)),level,text(name||'Tanpa judul'),...(customer?[]:[text(owner||'—')]),
+      fmt(target),progress+'%',status
+    ]);
+  }
+  for(const project of m.projects){
+    for(const {task,subs,progress} of summaries.get(project.id)||[]){
+      addWbsRow(project,'Tugas',task.name,task,progress,task.end,task.pic);
+      for(const item of task.wbs||[]){
+        addWbsRow(project,'Proses',task.name+' › '+item.name,item,woRaw(item),item.due,woAssigned(item,'wbsTask',task));
+      }
+      for(const sub of subs){
+        const path=task.name+' › '+sub.name;
+        addWbsRow(project,'Subtugas',path,sub,subProgress(sub),sub.due,woAssigned(sub,'sub',task));
+        for(const item of sub.wbs||[]){
+          addWbsRow(project,'Proses',path+' › '+item.name,item,woRaw(item),item.due,woAssigned(item,'wbsSub',task));
+        }
+      }
+    }
+  }
+  section('Rincian WBS',['Proyek','Tingkat','Pekerjaan',...(customer?[]:['PIC']),'Target','Progres','Status'],wbsRows,customer?5:6);
   if(document.getElementById('reportEvidence').checked){
     report.evidence=records.filter(record=>record.type!=='sub').flatMap(record=>
       (record.item.attachments||[]).filter(file=>!customer||file.customer===true).map(file=>({
@@ -145,7 +169,12 @@ function generateReport(){
         (report.customer||row[4]==='—'?'':'<div class="repair-note">'+esc(row[4])+'</div>')+'</article>').join('')+'</div>':
       '<div class="report-table-wrap" tabindex="0" role="region" aria-label="'+esc(name)+'"><table class="report-table"><thead><tr>'+headers.map(head=>'<th scope="col">'+esc(head)+'</th>').join('')+'</tr></thead><tbody>'+
         rows.map(row=>'<tr>'+row.map((cell,index)=>'<td>'+(index===statusColumn?statusBadge(cell):esc(cell))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
-    return '<section class="report-section"><div class="report-section-head"><h3>'+esc(name)+'</h3><span class="report-pill">'+rows.length+'</span></div>'+(rows.length?contents:'<p class="report-empty">Tidak ada data pada pilihan ini.</p>')+'</section>';
+    const empty=name==='Lampiran WBS'?
+      (report.customer?'Belum ada lampiran yang diizinkan untuk customer pada proyek ini.':'Belum ada foto atau PDF yang ditambahkan ke proses WBS dalam cakupan ini.'):
+      name==='Rincian WBS'?'Belum ada tugas, subtugas, atau proses WBS dalam cakupan ini.':'Tidak ada data pada pilihan ini.';
+    const data=rows.length?contents:'<p class="report-empty">'+esc(empty)+'</p>';
+    return '<section class="report-section"><div class="report-section-head"><h3>'+esc(name)+'</h3><span class="report-pill">'+rows.length+'</span></div>'+
+      (name==='Rincian WBS'&&rows.length?'<details class="report-details" '+(rows.length<=20?'open':'')+'><summary>Lihat '+rows.length+' pekerjaan WBS</summary>'+data+'</details>':data)+'</section>';
   });
   const groups=report.groups?'<section class="report-section"><h3>Prioritas tindak lanjut</h3>'+
     (report.groups.map(group=>'<details class="report-details"><summary>'+esc(group.name)+' · '+group.items.length+' terlambat</summary><p>'+esc(group.recommendation)+'</p><ul>'+
