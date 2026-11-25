@@ -2097,18 +2097,30 @@ function metricProgressClass(p){
 function uiTerms(value){
   return String(value||'').replace(/\bsub[- ]subtask\b/gi,'Proses WBS').replace(/\bsub[- ]task\b/gi,'Subtugas').replace(/\bprogress\b/gi,'Progres').replace(/\breport center\b/gi,'Pusat Laporan').replace(/\btask\b/gi,'Tugas');
 }
+let releaseBadgeTimer;
 function applyReleaseBadges(){
-  const now=today();
+  clearTimeout(releaseBadgeTimer);
+  const now=Date.now();
+  let next=Infinity;
   for(const badge of document.querySelectorAll('[data-release-date]')){
     const date=badge.dataset.releaseDate;
-    badge.hidden=!(date<=now&&dd(date,now)<14);
+    const release=Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(date)?date+'T00:00:00+07:00':date);
+    const expires=release+24*60*60*1000;
+    badge.hidden=!(now>=release&&now<expires);
+    if(now<release)next=Math.min(next,release);
+    else if(now<expires)next=Math.min(next,expires);
+    const button=badge.closest('.nav button[title]');
+    if(button){
+      const title=button.title.replace(/^NEW · /,'');
+      button.title=badge.hidden?title:'NEW · '+title;
+    }
   }
-  for(const button of document.querySelectorAll('.nav button[title^="NEW · "]')){
-    if(button.querySelector('[data-release-date][hidden]'))button.title=button.title.replace(/^NEW · /,'');
-  }
+  if(Number.isFinite(next))releaseBadgeTimer=setTimeout(applyReleaseBadges,Math.min(next-now,2147483647));
 }
 
 applyReleaseBadges();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)applyReleaseBadges();});
+window.addEventListener('pageshow',applyReleaseBadges);
 initializeRepairSettings();
 reportDate.value=today();renderAll();if(!location.hash.startsWith('#piccloud=')&&!location.hash.startsWith('#picupdate='))restoreCloudSession();
 if(location.hash.startsWith('#piccloud='))showCloudPicPortal(location.hash.slice('#piccloud='.length));
